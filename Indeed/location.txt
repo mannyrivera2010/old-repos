@@ -1,0 +1,61 @@
+$North East US------------------------------------
+Portland, ME
+Baltimore, MD
+Bethesda, MD
+Columbia, MD
+Annapolis Junction, MD
+Boston, MA
+New York, New York
+New York City, NY
+New Jersey, NJ
+Washington, DC
+Arlington, VA
+Springfield, VA
+Lexington, MA
+Pittsburgh, PA
+
+$South East------------------------------------
+Miami, FL
+Boca Raton, FL
+Riverview, FL
+St Petersburg, FL
+Tampa, FL
+Orlando, FL
+Jacksonville, Florida
+Durham, NC
+Charlotte, NC 
+Jacksonville,NC
+Mount Airy, NC
+Raleigh, NC
+Charleston, SC
+
+$Mid West US------------------------------------
+Columbus, OH
+Cleveland, OH
+Chicago, IL
+
+$South West US------------------------------------
+Dallas, TX
+Austin, TX
+Houston, TX
+Irving, TX
+
+$Pacific Coast------------------------------------
+San Jose, CA
+San Francisco, CA
+San Diego, CA
+Sunnyvale, CA
+Long Beach, CA
+Oceanside, CA
+Santa Clara, CA
+Studio City, CA
+Los Angeles, CA
+Mountain View, CA
+Palm Springs, CA
+Hollywood, CA
+
+$Mountain------------------------------------
+Boulder, CO
+Denver, CO
+Phoenix, AZ
+Tucson, AZ
