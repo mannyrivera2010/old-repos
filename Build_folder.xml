@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project default="create_run_jar" name="Create Runnable Jar for Project GrantProcessorSqlite with libraries in sub-folder">
+	<!--this file was created by Eclipse Runnable JAR Export Wizard-->
+	<!--ANT 1.7 is required                                        -->
+
+	<target name="create_run_jar">
+		
+		<delete dir="./release/"/>
+		<mkdir dir="./release/"/>
+
+		<jar destfile="./release/BrenchMarkv1.jar">
+			<manifest>
+				<attribute name="Main-Class" value="org.gui.Main"/>
+			</manifest>
+			<fileset dir="./bin"/>
+		</jar>
+
+	
+
+
+	</target>
+</project>
