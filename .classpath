@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6"/>
+	<classpathentry kind="lib" path="lib/javolution-5.5.1.jar" sourcepath="C:/Documents and Settings/Eriver6/.m2/repository/javolution/javolution/5.5.1/javolution-5.5.1-sources.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
