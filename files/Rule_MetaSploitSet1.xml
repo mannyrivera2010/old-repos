@@ -1,0 +1,61 @@
+<RulesSet="MetaSploit">
+	<rule_name="Metasploit HashDump">
+		<Description>Hacker did a Hashdump using Metasploit</Description>
+		
+		<PacketSequence>
+		
+			<Packet>
+				<Source_Port>4444</SourcePort> <!-- Optional -->
+				<Length>171</Length>
+				<HexContent="71">4A</HexContent>
+				<HexContent="100">A34B48C93E</HexContent>
+			</Packet>
+			
+			<Packet>
+				<Length>128</Length>
+				<HexContent="54">4</HexContent>
+				<HexContent="12">A34B48C93EA34B48C93E</HexContent>
+			</Packet>
+			
+			<Packet>
+				<Length>54</Length>
+				<HexContent="45">4A</HexContent>
+			</Packet>
+			
+			<Packet>
+				<Length>%</Length>
+			</Packet>
+			
+			<Packet>
+				<Length>54</Length>
+				<HexContent="24">4A</HexContent>
+			</Packet>
+		
+		</PacketsSequence>
+	</rule> <!-- End MetaSploit HashDump--> 
+	
+	<rule_name="MS09_050 Exploit">
+		<Description>Hacker Tryied to Exploited Machine with Metasploit using the MS09_050</Description>
+		
+		<PacketSequence>
+			<!-- Packets
+			...
+			...
+			...
+			...
+			...--> 
+		</PacketsSequence>
+	</rule> <!-- MS09_050 Exploit--> 
+	
+	<rule_name="MS08_067 Exploit">
+		<Description>Hacker Tryied to Exploited Machine with Metasploit using the MS08_067</Description>
+		<PacketSequence>
+			<!-- Packets
+			...
+			...
+			...
+			...
+			...--> 
+		</PacketsSequence>
+	</rule> <!-- MS08_067 Exploit--> 
+</rulesSet>
