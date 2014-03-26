@@ -1,0 +1,37 @@
+graph graph1 {
+	graph [overlap=false];
+	Node1 -- Node2
+	Node1 -- Node3
+	Node1 -- Node4
+	Node1 -- Node5
+	Node1 -- Node6
+	Node2 -- Node4
+	Node2 -- Node7
+	Node3 -- Node5
+	Node3 -- Node6
+	Node3 -- Node8
+	Node9 -- Node10
+	Node9 -- Node4
+	Node9 -- Node7
+	Node9 -- Node6
+	Node9 -- Node11
+	Node9 -- Node8
+	Node10 -- Node11
+	Node10 -- Node8
+	Node4 -- Node7
+	Node4 -- Node6
+	Node5 -- Node6
+	Node7 -- Node11
+	Node6 -- Node8
+	Node1 [label="Arizona",color="lightblue",style=filled];
+	Node2 [label="California",color="green",style=filled];
+	Node3 [label="Colorado",color="green",style=filled];
+	Node9 [label="Idaho",color="green",style=filled];
+	Node10 [label="Montana",color="lightblue",style=filled];
+	Node4 [label="Nevada",color="pink",style=filled];
+	Node5 [label="New Mexico",color="pink",style=filled];
+	Node7 [label="Oregon",color="lightblue",style=filled];
+	Node6 [label="Utah",color="yellow",style=filled];
+	Node11 [label="Washington",color="pink",style=filled];
+	Node8 [label="Wyoming",color="pink",style=filled];
+} 

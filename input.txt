@@ -1,0 +1,97 @@
+8 9 22 40
+4 5 26 29 42
+16 22 23 34 40 41
+2 26 35
+2 14 25 29 34 42 48
+19 30 37
+18 28 36
+1 9
+1 8 31 38 40
+24 26 35 42 45 48
+12 13 15 23 47
+11 15 20 33
+11 21 23 25 39 47
+5 23 25 34
+11 12 23 33 40 44 46
+3 22 41
+27
+7 36 44 46
+6 27 30 37 43
+12 33 47
+13 32 39 47
+1 3 16 40
+3 11 13 14 15 25 34 40
+10 32 39 48
+5 13 14 23 39 48
+2 4 10 35 42
+17 19 43
+7 30 36
+2 5 34 41 42
+6 19 28 36 43
+9 38 40 44
+21 24 39
+12 15 20 36 46
+3 5 14 23 29 41
+4 10 26 45
+7 18 28 30 33 46
+6 19
+9 31
+13 21 24 25 32 48
+1 3 9 15 22 23 31 44
+3 16 29 34
+2 5 10 26 29 48
+19 27 30
+15 18 31 40 46
+10 35
+15 18 33 36 44
+11 13 20 21
+5 10 24 25 39 42
+where
+1	Alabama
+2	Arizona
+3	Arkansas
+4	California
+5	Colorado
+6	Connecticut
+7	Delaware
+8	Florida
+9	Georgia
+10	Idaho
+11	Illinois
+12	Indiana
+13	Iowa
+14	Kansas
+15	Kentucky
+16	Louisiana
+17	Maine
+18	Maryland
+19	Massachusetts
+20	Michigan
+21	Minnesota
+22	Mississippi
+23	Missouri
+24	Montana
+25	Nebraska
+26	Nevada
+27	New Hampshire
+28	New Jersey
+29	New Mexico
+30	New York
+31	North Carolina
+32	North Dakota
+33	Ohio
+34	Oklahoma
+35	Oregon
+36	Pennsylvania
+37	Rhode Island
+38	South Carolina
+39	South Dakota
+40	Tennessee
+41	Texas
+42	Utah
+43	Vermont
+44	Virginia
+45	Washington
+46	West Virginia
+47	Wisconsin
+48	Wyoming
