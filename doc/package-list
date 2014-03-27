@@ -1,0 +1,13 @@
+org.core.EventMutliThread
+org.database
+org.database.controllers
+org.enums
+org.gui
+org.logging
+org.output.html
+org.shared
+org.shared.encryption
+org.shared.mailing
+org.shared.performance
+org.testing
+org.testing.log

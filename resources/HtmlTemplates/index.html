@@ -1,0 +1,73 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Grant Processing Main Page</title>
+	<link rel="stylesheet" href="./WebFiles/MainStyle.css">
+	<link rel="stylesheet" href="./WebFiles/theme/jquery-ui-1.8.21.css">
+
+	<script src="./WebFiles/js/jquery-1.7.2.min.js"></script>
+	<script src="./WebFiles/ui/jquery.ui.core.js"></script>
+	<script src="./WebFiles/ui/jquery.ui.widget.js"></script>
+	<script src="./WebFiles/ui/jquery.ui.accordion.js"></script>
+	<script src="./WebFiles/ui/jquery.ui.datepicker.js"></script>
+
+	<script>
+	$(function() {
+		$( "#accordion" ).accordion({
+			collapsible: true,
+			active: false ,
+			autoHeight: false
+			
+		});
+		
+	});
+	
+	$(function() {
+		$( "#datepicker" ).datepicker();
+	});
+	</script>
+
+<!--[if lte IE 7]>
+<style>
+.content { margin-right: -1px; } /* this 1px negative margin can be placed on any of the columns in this layout with the same corrective effect. */
+ul.nav a { zoom: 1; }  /* the zoom property gives IE the hasLayout trigger it needs to correct extra whiltespace between the links */
+</style>
+<![endif]-->
+</head>
+
+<body>
+	<div class="container">
+		<div class="header"><strong>Grant Processing Web Page </strong></br>(Last Updated: ##UpdateTime##)</div>
+		<div class="sidebar1">
+			<ul class="nav">
+				<li><a href="index.html">Main</a></li>
+				<li><a href="WebFiles/GrantList.html">Grant List</a></li>
+				<li><a href="WebFiles/FolderFiles.html">Folder Files</a></li>
+				<li><a href="WebFiles/IndividualFiles.html">Individual Files</a></li>
+				<li><a href="WebFiles/Processed.html">Processed</a></li>
+				</ul>
+		<p>&nbsp;</p>
+		<div id="datepicker"></div>
+		</div> <!-- End Side bar -->
+	
+	<div class="content">
+		<h3>Grant List </h3>
+		<p>Gives a List of Grants with Hyperlink of Grant Folder Files History</p>
+		<h3>Folder Files</h3>
+		<p>Tracking History of Individual Files in each Main Folder</p>
+		<h3>Individual Files</h3>
+		<p>Tracking History of Individual Files thoughout all Main folder</p>
+		<h3>Processed</h3>
+		<p>A list of Processed (finished) Grants</p>
+		<p><br /></p>
+  </div>
+  
+	<div class="footer">
+		<p>Created by  Emanuel Rivera (2012)</p>
+	</div>
+	
+  <!-- end .container -->
+ </div>
+</body>
+</html>

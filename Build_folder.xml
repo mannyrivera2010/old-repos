@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project default="create_run_jar" name="Create Runnable Jar for Project GrantProcessorSqlite with libraries in sub-folder">
+	<!--this file was created by Eclipse Runnable JAR Export Wizard-->
+	<!--ANT 1.7 is required                                        -->
+
+	<target name="create_run_jar">
+		
+		<delete dir="./release/"/>
+		<mkdir dir="./release/"/>
+
+		<jar destfile="./release/FileMonitor.jar">
+			<manifest>
+				<attribute name="Main-Class" value="org.gui.Main"/>
+				<attribute name="Class-Path" value=". lib/pack.jar"/>
+			</manifest>
+			<fileset dir="./bin"/>
+		</jar>
+
+		<delete dir="./release/lib"/>
+		<mkdir dir="./release/lib"/>
+
+		<copy file="./lib/sqlite4java-win32-x64.dll" todir="./release/lib"/>
+		<copy file="./lib/sqlite4java-win32-x86.dll" todir="./release/lib"/>
+
+		<jar destfile="./release/lib/pack.jar" filesetmanifest="mergewithoutmain">
+			<zipfileset excludes="META-INF/*.SF" src="./lib/activation.jar"/>
+			<zipfileset excludes="META-INF/*.SF" src="./lib/ini4j-0.5.2.jar"/>
+			<zipfileset excludes="META-INF/*.SF" src="./lib/jacksum.jar"/>
+			<zipfileset excludes="META-INF/*.SF" src="./lib/jasypt-1.9.0.jar"/>
+			<zipfileset excludes="META-INF/*.SF" src="./lib/javolution-5.5.1.jar"/>
+			<zipfileset excludes="META-INF/*.SF" src="./lib/joda-convert-1.2.jar"/>
+			<zipfileset excludes="META-INF/*.SF" src="./lib/joda-time-2.1.jar"/>
+			<zipfileset excludes="META-INF/*.SF" src="./lib/log4j-1.2.17.jar"/>
+			<zipfileset excludes="META-INF/*.SF" src="./lib/mail.jar"/>
+			<zipfileset excludes="META-INF/*.SF" src="./lib/mysql-connector-java-5.1.20-bin.jar"/>
+			<zipfileset excludes="META-INF/*.SF" src="./lib/slf4j-api-1.6.6.jar"/>
+			<zipfileset excludes="META-INF/*.SF" src="./lib/slf4j-log4j12-1.6.6.jar"/>
+			<zipfileset excludes="META-INF/*.SF" src="./lib/sqlitejdbc-v056.jar"/>
+			<zipfileset excludes="META-INF/*.SF" src="./lib/sqlite4java.jar"/>
+			<zipfileset excludes="META-INF/*.SF" src="./lib/commons-io-2.4.jar"/>
+		</jar>
+
+		
+		<!-- Program Files -->
+		<delete dir="./release/data"/>
+		<delete dir="./release/resources"/>
+		<mkdir dir="./release/data"/>
+		<mkdir dir="./release/resources"/>
+
+		<copy file="./Settings.ini" todir="./release/"/>
+		<copydir src="./data" dest="./release/data"/>
+		<copydir src="./resources" dest="./release/resources"/>
+
+
+	</target>
+</project>

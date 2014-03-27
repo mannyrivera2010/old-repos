@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<results>
+<header>http://cloc.sourceforge.net v 1.08  T=0.5 s (106.0 files/s, 18518.0 lines/s)</header>
+<languages>
+<language name="Java" files_count="40" blank="1061" comment="868" code="3356" />
+<language name="Javascript" files_count="5" blank="238" comment="350" code="2442" />
+<language name="CSS" files_count="2" blank="53" comment="138" code="473" />
+<language name="HTML" files_count="3" blank="35" comment="23" code="150" />
+<language name="XML" files_count="2" blank="11" comment="3" code="55" />
+<language name="DOS Batch" files_count="1" blank="0" comment="0" code="3" />
+<total sum_files="53" blank="1398" comment="1382" code="6479" />
+</languages>
+</results>
