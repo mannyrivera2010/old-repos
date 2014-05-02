@@ -38,8 +38,6 @@ public class SearchPage {
 		SearchPage Page1 = new SearchPage("m",20,20,"21230","f",35,1);
 		Page1.List_Download();
 		
-
-		
 		for(int i = 2 ; i <= 65 ; i ++){
 			Page1.appendSearchPage("m",20,20,"21230","f",35,i);
 			System.out.println(i + " out of " + 65);

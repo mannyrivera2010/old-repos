@@ -1,4 +1,4 @@
-package org;
+package org.towson;
 
 import java.io.BufferedReader;
 import java.io.IOException;
