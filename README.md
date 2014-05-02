@@ -1,2 +1,3 @@
-Eric_WordPress2
+Html File Extracter Organizer
 ===============
+This tool extracts information from html like files and organize them into folders with formatted html
