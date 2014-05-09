@@ -13,7 +13,7 @@ public interface MessageBusI {
 		 * @param subscriber the subscriber
 		 * @return true, if successful
 		 */
-		public boolean register(Client subscriber);
+		public boolean register(ClientI subscriber);
 		
 		/**
 		 * Unregister.
@@ -21,7 +21,7 @@ public interface MessageBusI {
 		 * @param subscriber the subscriber
 		 * @return true, if successful
 		 */
-		public boolean unregister(Client subscriber);
+		public boolean unregister(ClientI subscriber);
 		
 		/**
 		 * Dispatch.
@@ -38,7 +38,7 @@ public interface MessageBusI {
 		 * @param topic the topic
 		 * @return true, if successful
 		 */
-		boolean addTopic(Client subscriber, String topic);
+		boolean addTopic(ClientI subscriber, String topic);
 		
 		/**
 		 * Removes the topic.
@@ -47,5 +47,5 @@ public interface MessageBusI {
 		 * @param topic the topic
 		 * @return true, if successful
 		 */
-		boolean removeTopic(Client subscriber, String topic);
+		boolean removeTopic(ClientI subscriber, String topic);
 }

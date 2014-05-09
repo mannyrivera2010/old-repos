@@ -6,7 +6,7 @@ package org.listeners;
 public interface MessageListenerI {
 	
 	/**
-	 * Handle received JSON message
+	 * Handle received message
 	 *
 	 * @param message the message
 	 */

@@ -1,7 +1,9 @@
-package org;
+package org.demo;
 
 import java.util.ArrayList;
 
+import org.Client;
+import org.MessageBus;
 import org.exceptions.SubscriptionException;
 import org.listeners.MessageListenerI;
 
@@ -21,7 +23,7 @@ public class DemoPrac {
 		MessageBus mainMessageBus = new MessageBus();
 		
 		//Creating Client Alice
-		Client alice = new Client();
+		Client alice = new Client("alice");
 		alice.connect(mainMessageBus);
 		try {
 			alice.subscribe("foo");
@@ -30,7 +32,7 @@ public class DemoPrac {
 		}
 		
 		//Creating Client Bob
-		Client bob = new Client();
+		Client bob = new Client("bob");
 		bob.connect(mainMessageBus);
 		try {
 			bob.subscribe("bar");
@@ -39,7 +41,7 @@ public class DemoPrac {
 		}
 		
 		//Creating Client carol
-		Client carol = new Client();
+		Client carol = new Client("carol");
 		carol.connect(mainMessageBus);
 		try {
 			carol.subscribe("bar");

@@ -30,6 +30,10 @@ public class Client implements ClientI {
 		this.id = UUID.randomUUID().toString();
 	}
 	
+	public Client(String id){
+		this.id = id;
+	}
+	
 	/* (non-Javadoc)
 	 * @see org.interfaces.ClientI#connect(org.interfaces.MessageBusI)
 	 */
@@ -101,7 +105,7 @@ public class Client implements ClientI {
 	 */
 	@Override
 	public String toString() {
-		return "Client [id=" + id + "]";
+		return "Client[" + id + "]";
 	}
 
 	/* (non-Javadoc)
