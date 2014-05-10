@@ -20,7 +20,6 @@ public class MessageBus implements MessageBusI {
 	/** The logger. */
 	private Logger logger = Logger.getLogger("earasoft.MessageBus");
 	
-	
 	private TopicSubscriberMgr topicSubscriberMgr;
 	/**
 	 * Instantiates a new message bus.
@@ -52,7 +51,7 @@ public class MessageBus implements MessageBusI {
 	 */
 	@Override
 	public boolean register(ClientI client) {
-		return topicSubscriberMgr.registerSubsciber(client);
+		return topicSubscriberMgr.registerSubscriber(client);
 	}
 
 	/* (non-Javadoc)

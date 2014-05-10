@@ -18,55 +18,14 @@ public class TopicSubscriberMgr {
 	private Map<String, HashSet<ClientI>> mapTopicToSubscribers = new TreeMap<String, HashSet<ClientI>>();
 	private Map<ClientI, HashSet<String>> mapSubscriberToTopics = new HashMap<ClientI, HashSet<String>>();
 	
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		ClientI client1 = new Client("client1");
-		ClientI client2 = new Client("client2");
-		
-		
-		
-		TopicSubscriberMgr mgr = new TopicSubscriberMgr();
-		
-		mgr.createTopic("topic1");
-		mgr.createTopic("topic2");
-		System.out.printf("Topics: %s\n",mgr.listTopics());
-		
-		mgr.registerSubsciber(client1);
-		mgr.registerSubsciber(client2);
-		System.out.println(mgr.listSubscibers());
-		
-		System.out.printf("mgr: %s\n", mgr);
-		
-		try {
-			mgr.addTopicToSubscriber("topic1", client1);
-			mgr.addTopicToSubscriber("topic3", client1);
-			mgr.addTopicToSubscriber("topic3", client2);
-			System.out.printf("Get Topics for Subscriber: %s\n",mgr.filterSubscribersByTopic("topic1"));
-			System.out.printf("Get Subscriber for Topics: %s\n",mgr.filterTopicsBySubscriber(client1));
-			System.out.printf("mgr: %s\n", mgr);
-			mgr.deleteTopic("topic1");
-			System.out.printf("Get Topics for Subscriber: %s\n",mgr.filterSubscribersByTopic("topic1"));
-			System.out.printf("Get Subscriber for Topics: %s\n",mgr.filterTopicsBySubscriber(client1));
-			System.out.printf("mgr: %s\n", mgr);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		System.out.printf("Topics: %s\n",mgr.listTopics());
-	}
-
 	public boolean addTopicToSubscriber(String topic, ClientI client){
-		if(this.mapTopicToSubscribers.containsKey(topic)){
-			if(this.mapSubscriberToTopics.containsKey(client)){
-				this.mapSubscriberToTopics.get(client).add(topic);
-				this.mapTopicToSubscribers.get(topic).add(client);
-				return true;
-			}else{
-				// Subscriber is not registered
-				return false;
-			}
+		if(this.mapTopicToSubscribers.containsKey(topic) && this.mapSubscriberToTopics.containsKey(client)){
+			this.mapSubscriberToTopics.get(client).add(topic);
+			this.mapTopicToSubscribers.get(topic).add(client);
+			return true;
 		}else{
+			if(!this.mapSubscriberToTopics.containsKey(client))
+				return false;
 			// Topic does not exist
 			this.createTopic(topic);
 			this.mapSubscriberToTopics.get(client).add(topic);
@@ -76,16 +35,12 @@ public class TopicSubscriberMgr {
 	}
 	
 	public boolean removeTopicFromSubscriber(String topic, ClientI client){
-		if(this.mapTopicToSubscribers.containsKey(topic)){
-			if(this.mapSubscriberToTopics.containsKey(client)){
-				this.mapTopicToSubscribers.get(topic).remove(client);
-				this.mapSubscriberToTopics.get(client).remove(topic);
-				return true;
-			}else{
-				return false;
-			}
-		}else{
+		if(this.mapTopicToSubscribers.containsKey(topic) && this.mapSubscriberToTopics.containsKey(client)){
+			this.mapTopicToSubscribers.get(topic).remove(client);
+			this.mapSubscriberToTopics.get(client).remove(topic);
 			return true;
+		}else{
+			return false;
 		}
 	}
 	
@@ -124,11 +79,11 @@ public class TopicSubscriberMgr {
 		return new ArrayList<String>(this.mapTopicToSubscribers.keySet());
 	}
 	
-	public List<ClientI> listSubscibers(){
+	public List<ClientI> listSubscribers(){
 		return new ArrayList<ClientI>(this.mapSubscriberToTopics.keySet());
 	}
 	
-	public boolean registerSubsciber(ClientI client){
+	public boolean registerSubscriber(ClientI client){
 		if(this.mapSubscriberToTopics.containsKey(client)){
 			return false;
 		}else{
@@ -151,7 +106,7 @@ public class TopicSubscriberMgr {
 		}	
 	}
 	
-	public Set<ClientI> filterSubscribersByTopic(String topic){
+	public HashSet<ClientI> filterSubscribersByTopic(String topic){
 		if(this.mapTopicToSubscribers.containsKey(topic)){
 			return this.mapTopicToSubscribers.get(topic);
 		}else{
@@ -160,12 +115,12 @@ public class TopicSubscriberMgr {
 		}
 	}
 	
-	public Set<String> filterTopicsBySubscriber(ClientI client) throws Exception{
+	public HashSet<String> filterTopicsBySubscriber(ClientI client){
 		if(this.mapSubscriberToTopics.containsKey(client)){
 			return this.mapSubscriberToTopics.get(client);
 		}else{
-			//return new HashSet<String>();
-			throw new Exception("Subscriber is not registered");
+			return new HashSet<String>();
+			//throw new Exception("Subscriber is not registered");
 		}	
 	}
 
@@ -208,19 +163,8 @@ public class TopicSubscriberMgr {
 
 	@Override
 	public String toString() {
-		Gson gson = new GsonBuilder().create();
-		System.out.println(gson.toJson(this));
 		return "TopicSubscriberMgr [mapTopicToSubscribers="
 				+ mapTopicToSubscribers + ", mapSubscriberToTopics="
 				+ mapSubscriberToTopics + "]";
 	}
-
-	/*
-	@Override
-	public String toString() {
-		
-	}
-	/*
-	 
-	 */
 }
