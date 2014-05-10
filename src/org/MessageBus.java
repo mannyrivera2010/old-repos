@@ -10,6 +10,7 @@ import java.util.HashSet;
 import org.interfaces.MessageBusI;
 import org.interfaces.ClientI;
 import org.interfaces.TopicSubscriberMgrI;
+import org.utils.MessageObject;
 
 import com.google.gson.Gson;
 
@@ -39,7 +40,7 @@ public class MessageBus implements MessageBusI {
 		
 		for(ClientI client : clientsWithTopic){
 			try{
-				client.callMessageListener(message);
+				client.callMessageListener(new MessageObject(message));
 			}catch(Exception e){
 				logger.log(Level.WARNING,
 						String.format("Could not excute callback for (%s)",client),e);

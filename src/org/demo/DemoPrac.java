@@ -5,7 +5,8 @@ import java.util.ArrayList;
 import org.Client;
 import org.MessageBus;
 import org.exceptions.SubscriptionException;
-import org.listeners.MessageListenerI;
+import org.interfaces.MessageListenerI;
+import org.utils.MessageObject;
 
 /**
  * The Class Demo.
@@ -54,22 +55,22 @@ public class DemoPrac {
 		//Add Message Listeners for Clients
 		alice.addMessageListener(new MessageListenerI(){
 			@Override
-			public void handleReceivedMessage(String message) {
-				System.out.printf("Alice - %s\n", message);
+			public void handleReceivedMessage(MessageObject message) {
+				System.out.printf("Alice - %s\n", message.getMessage());
 			}
 		});
 		
 		bob.addMessageListener(new MessageListenerI(){
 			@Override
-			public void handleReceivedMessage(String message) {
-				System.out.printf("Bob - %s\n", message);
+			public void handleReceivedMessage(MessageObject message) {
+				System.out.printf("Bob - %s\n", message.getMessage());
 			}
 		});
 		
 		carol.addMessageListener(new MessageListenerI(){
 			@Override
-			public void handleReceivedMessage(String message) {
-				System.out.printf("Carol - %s\n", message);
+			public void handleReceivedMessage(MessageObject message) {
+				System.out.printf("Carol - %s\n", message.getMessage());
 			}
 		});
 		

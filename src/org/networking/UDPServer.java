@@ -3,26 +3,29 @@ package org.networking;
 import java.io.*;
 import java.net.*;
 import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import org.interfaces.MessageListenerI;
+import org.interfaces.UDPMessageListenerI;
+import org.utils.MessageObject;
+import org.utils.Serialization;
 
 public class UDPServer extends Thread{
+
+	/** The message listener. */
+	private UDPMessageListenerI messageListener;
 	
-	public static void main(String args[]) throws InterruptedException {
-		UDPServer UDPServerObj= new UDPServer();
-		UDPServerObj.run();
-		
-		System.out.println("Test");
-		
-	}
+	/** The logger. */
+	private Logger logger = Logger.getLogger("earasoft.UDPServer");
 	
 	private DatagramSocket sock = null;
 	private int port = 7777;
 	
 	public UDPServer(){
-		// 1. creating a server socket, parameter is local port number
 		try {
 			sock = new DatagramSocket(port);
 		} catch (SocketException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -33,16 +36,16 @@ public class UDPServer extends Thread{
 		DatagramPacket incoming = new DatagramPacket(buffer, buffer.length);
 
 		sock.receive(incoming);
-		System.out.println("Client Connected:"+incoming.getSocketAddress());
+		
 		byte[] data = incoming.getData();
-
+		logger.log(Level.INFO, "Client Connected:" + incoming.getSocketAddress());
 		HashMap<String,Object> Objs= new HashMap<String,Object>();
 		Objs.put("MessageObject", (MessageObject) Serialization.deserializeAndDecompress(data));
 		Objs.put("Connection", (DatagramPacket)incoming);
 		return Objs;
 	}
 
-	public void sendObject(MessageObject msgObj,DatagramPacket outgoing) throws IOException{
+	public void sendObject(MessageObject msgObj, DatagramPacket outgoing) throws IOException{
 		//Sending Data back to Client
 		byte[] MsgObjData = Serialization.serializeAndCompress(msgObj);
 		DatagramPacket dp = new DatagramPacket(MsgObjData,
@@ -60,36 +63,53 @@ public class UDPServer extends Thread{
 		try {
 			startServer();
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 	
-	
 	public void startServer() throws InterruptedException{
-		try {
-			echo("Server socket created. Waiting for incoming data...");
-			// communication loop
+			logger.log(Level.INFO, "Server socket created. Waiting for incoming data...");
+			// Communication loop
 			while (true) {
-				//Getting Data from Client
-				HashMap<String,Object> Objs= recieveObject();
-				DatagramPacket incoming=(DatagramPacket) Objs.get("Connection");
-				MessageObject msgObj = (MessageObject) Objs.get("MessageObject");
+				try {
+					//Getting Data from Client
+					HashMap<String,Object> Objs = recieveObject();
+					DatagramPacket incoming=(DatagramPacket) Objs.get("Connection");
+					MessageObject msgObj = (MessageObject) Objs.get("MessageObject");
+	
+					logger.log(Level.INFO, (incoming.getAddress().getHostAddress() + " : "
+							+ incoming.getPort() + " - \t ID:"+msgObj.getClientID()));
+					
+					if(this.messageListener != null){
+						this.callMessageListener(incoming, msgObj);
+					}else{
+						this.handleMessage(incoming, msgObj);	
+					}
+				}catch (IOException e) {
+					logger.log(Level.SEVERE, "IOException ", e);
+				}catch(Exception e){
+					logger.log(Level.WARNING, "Error Handling Message", e);
+				}
+			}// End While
+	}
 
-				// echo the details of incoming data - client ip : client port -
-				// client message
-				echo(incoming.getAddress().getHostAddress() + " : "
-						+ incoming.getPort() + " - " + msgObj + "\t ID:"+msgObj.getClientID());
-				
-				//sending Object
-				sendObject(msgObj,incoming);
-			}//End Loop
-		}catch (IOException e) {
-			System.err.println("IOException " + e);
+	public void handleMessage(DatagramPacket incoming, MessageObject msgObj){
+		logger.log(Level.INFO, (incoming.getAddress().getHostAddress() + " : "
+				+ incoming.getPort() + " - " + msgObj + "\t ID:"+msgObj.getClientID()));
+		//sending Object
+		try {
+			sendObject(msgObj, incoming);
+		} catch (IOException e) {
+			logger.log(Level.WARNING,"Error Sending", e);
 		}
 	}
-	// simple function to echo data to terminal
-	public static void echo(String msg) {
-		System.out.println(msg);
+
+	public void addMessageListener(UDPMessageListenerI messageListener){
+		this.messageListener = messageListener;
 	}
+
+	void callMessageListener(DatagramPacket datagramPacket, MessageObject message){
+		this.messageListener.handleReceivedMessage(datagramPacket, message);	
+	}
+
 }

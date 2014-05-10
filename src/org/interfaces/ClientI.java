@@ -1,7 +1,7 @@
 package org.interfaces;
 
 import org.exceptions.SubscriptionException;
-import org.listeners.MessageListenerI;
+import org.utils.MessageObject;
 
 /**
  * The Interface SubscriberI.
@@ -50,7 +50,7 @@ public interface ClientI {
 	 *
 	 * @param message2 
 	 */
-	void callMessageListener(String message);
+	void callMessageListener(MessageObject message);
 	
 	/**
 	 * Publish.
@@ -60,4 +60,5 @@ public interface ClientI {
 	 */
 	public void publish(String topic, String message);
 
+	
 }

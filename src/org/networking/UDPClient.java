@@ -5,42 +5,52 @@ import java.math.BigInteger;
 import java.net.*;
 import java.util.Random;
 import java.util.UUID;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.apache.commons.codec.digest.DigestUtils;
+import org.interfaces.MessageListenerI;
+import org.utils.MessageObject;
+import org.utils.Serialization;
 
 public class UDPClient implements Runnable {
-
-	public static void main(String args[]) throws IOException {
-		UDPClient UDPClientObj= new UDPClient();
-		
-		Thread t1 = new Thread(UDPClientObj);
-		t1.start();
-		
-		UDPClientObj.sendMsg();
-		UDPClientObj.sendMsg();
-		System.out.println("d");
-		
-	}
+	
+	/** The logger. */
+	private Logger logger = Logger.getLogger("earasoft.UDPServer");
+	/** The message listener. */
+	private MessageListenerI messageListener;
 	
 	private DatagramSocket sock = null;
 	private String ClientID;
-	private int port = 7777;
+	private InetAddress host;
+	private int port;
 	
 	public UDPClient(){
 		this.ClientID = UUID.randomUUID().toString();
+		try {
+			this.host = InetAddress.getByName("localhost");
+		} catch (UnknownHostException e) {
+			e.printStackTrace();
+		}
+		this.port = 7777;
+	}
+	
+	public UDPClient(String ipAddress , int port) throws UnknownHostException{
+		this();
+		this.host = InetAddress.getByName("localhost");
+		this.port = port;
 	}
 
 	@Override
 	public void run(){
-		StartClient();
+		startListening();
 	}
 	
-	public void StartClient(){
+	public void startListening(){
 		try {
 			sock = new DatagramSocket();
 			sock.setSoTimeout(5000);   // set the timeout in millisecounds.
 
-			
 			while (true) {
 				//sendMsg();
 				readMsg();
@@ -50,29 +60,14 @@ public class UDPClient implements Runnable {
 		}
 	}//end sum
 
-	private void sendMsg() throws IOException {
-		InetAddress host = InetAddress.getByName("localhost");
-		BufferedReader cin = new BufferedReader(new InputStreamReader(System.in));
-		String s;
-		MessageObject ClientMsgObj= new MessageObject();
-		//Pre-Requirement 
-		ClientMsgObj.setClientID(ClientID);
-		
-		// take input and send the packet
-		echo("Enter message to send : ");
-		s = (String) cin.readLine();
-		
-		ClientMsgObj.setOneLineMessage(s);
-		
-		byte[] MsgObjDataSending = Serialization.serializeAndCompress(ClientMsgObj);
+	void sendMsg(MessageObject clientMsgObj) throws IOException {
+		clientMsgObj.setClientID(this.ClientID);
+		byte[] MsgObjDataSending = Serialization.serializeAndCompress(clientMsgObj);
 		DatagramPacket dp = new DatagramPacket(MsgObjDataSending,MsgObjDataSending.length, host, port);
 		sock.send(dp);
 	}
 
-	private void readMsg() throws SocketException {
-		/////////////////////////////////////////////////////////////////////////
-		// now receive reply
-		// buffer to receive incoming data
+	private void readMsg(){
 		int maxtries=0;
 		boolean retry = true;
 		while(retry==true){
@@ -85,28 +80,39 @@ public class UDPClient implements Runnable {
 				byte[] data = reply.getData();
 				MessageObject msgObj = (MessageObject) Serialization.deserializeAndDecompress(data);
 
-				// echo the details of incoming data - client ip : client port -
-				// client message
-				echo(reply.getAddress().getHostAddress() + " : "
+				logger.log(Level.FINE, reply.getAddress().getHostAddress() + " : "
 						+ reply.getPort() + " - " + msgObj);
 				
+				if(this.messageListener != null){
+					this.callMessageListener(msgObj);
+				}
 			}catch (Exception e) {
 				retry=true;
 				maxtries++;
 
-				sock.setSoTimeout(sock.getSoTimeout()*2);
-				System.err.println("Retry #"+ maxtries + "   " + e+"  Timeout="+sock.getSoTimeout());
-				
-				if(maxtries>=3){
-					retry=false;
-					sock.setSoTimeout(5000);
+				try {
+					sock.setSoTimeout(sock.getSoTimeout()*2);
+					logger.log(Level.WARNING, "Retry #" + maxtries + " : " + e +"  Timeout = " + sock.getSoTimeout());
+					
+					if(maxtries>=3){
+						retry=false;
+						sock.setSoTimeout(5000);
+					}
+				} catch (SocketException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
 				}
+				
 			}
 		}
 	}
-	
-	// simple function to echo data to terminal
-	public void echo(String msg) {
-		System.out.println(msg);
+
+	public void addMessageListener(MessageListenerI messageListener){
+		this.messageListener = messageListener;
 	}
+	
+	void callMessageListener(MessageObject message){
+		this.messageListener.handleReceivedMessage(message);	
+	}
+	
 }

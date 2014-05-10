@@ -7,7 +7,8 @@ import java.util.logging.Logger;
 import org.exceptions.SubscriptionException;
 import org.interfaces.MessageBusI;
 import org.interfaces.ClientI;
-import org.listeners.MessageListenerI;
+import org.interfaces.MessageListenerI;
+import org.utils.MessageObject;
 
 /**
  * The Class Client.
@@ -88,7 +89,7 @@ public class Client implements ClientI {
 	 * @see org.interfaces.ClientI#callMessageListener(java.lang.String)
 	 */
 	@Override
-	public void callMessageListener(String message){
+	public void callMessageListener(MessageObject message){
 		this.messageListener.handleReceivedMessage(message);	
 	}
 	
