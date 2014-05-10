@@ -11,12 +11,13 @@ import java.util.Set;
 import junit.framework.Assert;
 
 import org.interfaces.ClientI;
+import org.interfaces.TopicSubscriberMgrI;
 import org.junit.Before;
 import org.junit.Test;
 
 public class TopicSubscriberMgrTest {
 
-	private TopicSubscriberMgr topicSubscriberMgr;
+	private TopicSubscriberMgrI topicSubscriberMgr;
 	private Map<String, HashSet<ClientI>> getMapTopicToSubscribers;
 	private Map<ClientI, HashSet<String>> getMapSubscriberToTopics;
 	

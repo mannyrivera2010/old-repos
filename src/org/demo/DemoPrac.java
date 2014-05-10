@@ -21,7 +21,7 @@ public class DemoPrac {
 	public static void main(String[] args){
 		//Making Main Message Bus
 		MessageBus mainMessageBus = new MessageBus();
-		
+
 		//Creating Client Alice
 		Client alice = new Client("alice");
 		alice.connect(mainMessageBus);

@@ -9,15 +9,20 @@ import java.util.Set;
 import java.util.TreeMap;
 
 import org.interfaces.ClientI;
+import org.interfaces.TopicSubscriberMgrI;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.annotations.Expose;
 
-public class TopicSubscriberMgr {
+public class TopicSubscriberMgr implements TopicSubscriberMgrI {
 	private Map<String, HashSet<ClientI>> mapTopicToSubscribers = new TreeMap<String, HashSet<ClientI>>();
 	private Map<ClientI, HashSet<String>> mapSubscriberToTopics = new HashMap<ClientI, HashSet<String>>();
 	
+	/* (non-Javadoc)
+	 * @see org.TopicSubscriberMgrI#addTopicToSubscriber(java.lang.String, org.interfaces.ClientI)
+	 */
+	@Override
 	public boolean addTopicToSubscriber(String topic, ClientI client){
 		if(this.mapTopicToSubscribers.containsKey(topic) && this.mapSubscriberToTopics.containsKey(client)){
 			this.mapSubscriberToTopics.get(client).add(topic);
@@ -34,6 +39,10 @@ public class TopicSubscriberMgr {
 		}
 	}
 	
+	/* (non-Javadoc)
+	 * @see org.TopicSubscriberMgrI#removeTopicFromSubscriber(java.lang.String, org.interfaces.ClientI)
+	 */
+	@Override
 	public boolean removeTopicFromSubscriber(String topic, ClientI client){
 		if(this.mapTopicToSubscribers.containsKey(topic) && this.mapSubscriberToTopics.containsKey(client)){
 			this.mapTopicToSubscribers.get(topic).remove(client);
@@ -44,6 +53,10 @@ public class TopicSubscriberMgr {
 		}
 	}
 	
+	/* (non-Javadoc)
+	 * @see org.TopicSubscriberMgrI#createTopic(java.lang.String)
+	 */
+	@Override
 	public boolean createTopic(String topic){
 		if(this.mapTopicToSubscribers.containsKey(topic)){
 			return false;
@@ -53,6 +66,10 @@ public class TopicSubscriberMgr {
 		}
 	}
 	
+	/* (non-Javadoc)
+	 * @see org.TopicSubscriberMgrI#deleteTopic(java.lang.String)
+	 */
+	@Override
 	public boolean deleteTopic(String topic){
 		if(this.mapTopicToSubscribers.containsKey(topic)){
 			//Remove Topic from Subscribers that has it
@@ -67,22 +84,42 @@ public class TopicSubscriberMgr {
 		}
 	}
 	
+	/* (non-Javadoc)
+	 * @see org.TopicSubscriberMgrI#getMapTopicToSubscribers()
+	 */
+	@Override
 	public Map<String, HashSet<ClientI>> getMapTopicToSubscribers() {
 		return mapTopicToSubscribers;
 	}
 
+	/* (non-Javadoc)
+	 * @see org.TopicSubscriberMgrI#getMapSubscriberToTopics()
+	 */
+	@Override
 	public Map<ClientI, HashSet<String>> getMapSubscriberToTopics() {
 		return mapSubscriberToTopics;
 	}
 
+	/* (non-Javadoc)
+	 * @see org.TopicSubscriberMgrI#listTopics()
+	 */
+	@Override
 	public List<String> listTopics(){
 		return new ArrayList<String>(this.mapTopicToSubscribers.keySet());
 	}
 	
+	/* (non-Javadoc)
+	 * @see org.TopicSubscriberMgrI#listSubscribers()
+	 */
+	@Override
 	public List<ClientI> listSubscribers(){
 		return new ArrayList<ClientI>(this.mapSubscriberToTopics.keySet());
 	}
 	
+	/* (non-Javadoc)
+	 * @see org.TopicSubscriberMgrI#registerSubscriber(org.interfaces.ClientI)
+	 */
+	@Override
 	public boolean registerSubscriber(ClientI client){
 		if(this.mapSubscriberToTopics.containsKey(client)){
 			return false;
@@ -92,6 +129,10 @@ public class TopicSubscriberMgr {
 		}	
 	}
 	
+	/* (non-Javadoc)
+	 * @see org.TopicSubscriberMgrI#unregisterSubscriber(org.interfaces.ClientI)
+	 */
+	@Override
 	public boolean unregisterSubscriber(ClientI client){
 		if(this.mapSubscriberToTopics.containsKey(client)){
 			// Remove Subscribers that contain 
@@ -106,6 +147,10 @@ public class TopicSubscriberMgr {
 		}	
 	}
 	
+	/* (non-Javadoc)
+	 * @see org.TopicSubscriberMgrI#filterSubscribersByTopic(java.lang.String)
+	 */
+	@Override
 	public HashSet<ClientI> filterSubscribersByTopic(String topic){
 		if(this.mapTopicToSubscribers.containsKey(topic)){
 			return this.mapTopicToSubscribers.get(topic);
@@ -115,6 +160,10 @@ public class TopicSubscriberMgr {
 		}
 	}
 	
+	/* (non-Javadoc)
+	 * @see org.TopicSubscriberMgrI#filterTopicsBySubscriber(org.interfaces.ClientI)
+	 */
+	@Override
 	public HashSet<String> filterTopicsBySubscriber(ClientI client){
 		if(this.mapSubscriberToTopics.containsKey(client)){
 			return this.mapSubscriberToTopics.get(client);

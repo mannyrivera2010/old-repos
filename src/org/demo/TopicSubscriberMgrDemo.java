@@ -3,6 +3,7 @@ package org.demo;
 import org.Client;
 import org.TopicSubscriberMgr;
 import org.interfaces.ClientI;
+import org.interfaces.TopicSubscriberMgrI;
 
 public class TopicSubscriberMgrDemo {
 
@@ -11,7 +12,7 @@ public class TopicSubscriberMgrDemo {
 		ClientI client1 = new Client("client1");
 		ClientI client2 = new Client("client2");
 		
-		TopicSubscriberMgr mgr = new TopicSubscriberMgr();
+		TopicSubscriberMgrI mgr = new TopicSubscriberMgr();
 		
 		mgr.createTopic("topic1");
 		mgr.createTopic("topic2");

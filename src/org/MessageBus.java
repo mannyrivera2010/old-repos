@@ -9,6 +9,7 @@ import java.util.HashSet;
 
 import org.interfaces.MessageBusI;
 import org.interfaces.ClientI;
+import org.interfaces.TopicSubscriberMgrI;
 
 import com.google.gson.Gson;
 
@@ -20,7 +21,7 @@ public class MessageBus implements MessageBusI {
 	/** The logger. */
 	private Logger logger = Logger.getLogger("earasoft.MessageBus");
 	
-	private TopicSubscriberMgr topicSubscriberMgr;
+	private TopicSubscriberMgrI topicSubscriberMgr;
 	/**
 	 * Instantiates a new message bus.
 	 */
