@@ -1,6 +1,5 @@
 package org.interfaces;
 
-import org.exceptions.SubscriptionException;
 import org.utils.MessageObject;
 
 /**
@@ -28,7 +27,7 @@ public interface ClientI {
 	 * @param topic the topic
 	 * @throws SubscriptionException the subscription exception
 	 */
-	public void subscribe(String topic) throws SubscriptionException;
+	public void subscribe(String topic);
 	
 	/**
 	 * Unsubscribe.
@@ -36,7 +35,7 @@ public interface ClientI {
 	 * @param topic the topic
 	 * @throws SubscriptionException the subscription exception
 	 */
-	public void unsubscribe(String topic) throws SubscriptionException;
+	public void unsubscribe(String topic);
 	
 	/**
 	 * Adds the message listener.

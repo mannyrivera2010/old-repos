@@ -5,7 +5,6 @@ import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.exceptions.SubscriptionException;
 import org.interfaces.MessageBusI;
 import org.interfaces.ClientI;
 import org.interfaces.MessageListenerI;
@@ -36,8 +35,7 @@ public class Client implements ClientI {
 	public Client(String id ){
 		this.id = id;
 	}
-	
-	
+
 	public Client(String id , String ipAddress, int port){
 		this.id = id;
 	}
@@ -48,7 +46,7 @@ public class Client implements ClientI {
 	@Override
 	public void connect(MessageBusI messageBus) {
 		this.messageBus = messageBus;
-		messageBus.register(this);
+		messageBus.registerSubscriber(this);
 	}
 
 	/* (non-Javadoc)
@@ -59,34 +57,23 @@ public class Client implements ClientI {
 		this.messageBus = null;
 	}
 
-	private MessageObject getMessageObject(String command, String message){
-		MessageObject messageObject = new MessageObject();
-		messageObject.setCommand(command);
-		messageObject.setMessage(message);
-		return messageObject;
-	}
 	/* (non-Javadoc)
 	 * @see org.interfaces.ClientI#subscribe(java.lang.String)
 	 */
 	@Override
-	public void subscribe(String topic) throws SubscriptionException {
-		if(this.messageBus != null){
-			this.messageBus.addTopic(this, topic);	
-		}else{
-			throw new SubscriptionException("Error subscribing to MessageBus due to not connecting to one");
-		}
+	public void subscribe(String topic){
+		if(this.messageBus != null)
+			this.messageBus.addTopicToSubscriber(topic, this);	
+		
 	}
 
 	/* (non-Javadoc)
 	 * @see org.interfaces.ClientI#unsubscribe(java.lang.String)
 	 */
 	@Override
-	public void unsubscribe(String topic) throws SubscriptionException {
-		if(this.messageBus != null){
-			this.messageBus.removeTopic(this, topic);
-		}else{
-			throw new SubscriptionException("Error unsubscribing to MessageBus due to not connecting to one");
-		}
+	public void unsubscribe(String topic){
+		if(this.messageBus != null)
+			this.messageBus.removeTopicFromSubscriber(topic, this);
 	}
 
 	/* (non-Javadoc)

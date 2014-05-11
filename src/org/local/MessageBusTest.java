@@ -11,13 +11,13 @@ import java.util.Set;
 import junit.framework.Assert;
 
 import org.interfaces.ClientI;
-import org.interfaces.TopicSubscriberMgrI;
+import org.interfaces.MessageBusI;
 import org.junit.Before;
 import org.junit.Test;
 
-public class TopicSubscriberMgrTest {
+public class MessageBusTest {
 
-	private TopicSubscriberMgrI topicSubscriberMgr;
+	private MessageBusI topicSubscriberMgr;
 	private Map<String, HashSet<ClientI>> getMapTopicToSubscribers;
 	private Map<ClientI, HashSet<String>> getMapSubscriberToTopics;
 	
@@ -30,7 +30,7 @@ public class TopicSubscriberMgrTest {
 	
     @Before
     public void setUp() throws Exception{
-    	this.topicSubscriberMgr = new TopicSubscriberMgr();
+    	this.topicSubscriberMgr = new MessageBus();
     	this.getMapSubscriberToTopics = this.topicSubscriberMgr.getMapSubscriberToTopics();
     	this.getMapTopicToSubscribers  = this.topicSubscriberMgr.getMapTopicToSubscribers();
 
