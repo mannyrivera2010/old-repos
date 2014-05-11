@@ -2,6 +2,7 @@ package org.interfaces;
 
 import java.net.DatagramPacket;
 
+import org.networking.server.UDPServer;
 import org.utils.MessageObject;
 
 /**
@@ -14,5 +15,5 @@ public interface UDPMessageListenerI {
 	 *
 	 * @param message the message
 	 */
-	public void handleReceivedMessage(DatagramPacket datagramPacket, MessageObject message);
+	public void handleReceivedMessage(UDPServer serverObj, DatagramPacket datagramPacket, MessageObject message);
 }
