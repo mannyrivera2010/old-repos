@@ -27,7 +27,7 @@ public interface MessageBusI {
 		 * @param topic the topic
 		 * @param message the message
 		 */
-		public void dispatch(String topic, String message, String ClientID);
+		public void dispatch(String topic, String message);
 		
 		/**
 		 * Adds the topic.

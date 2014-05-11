@@ -47,7 +47,6 @@ public class Client implements ClientI {
 	 */
 	@Override
 	public void connect(MessageBusI messageBus) {
-
 		this.messageBus = messageBus;
 		messageBus.register(this);
 	}
@@ -57,7 +56,6 @@ public class Client implements ClientI {
 	 */
 	@Override
 	public void disconnect(MessageBusI messageBus) {
-
 		this.messageBus = null;
 	}
 
@@ -112,7 +110,8 @@ public class Client implements ClientI {
 	 */
 	@Override
 	public void publish(String topic, String message) {
-		this.messageBus.dispatch(topic, message, this.toString());
+		
+		this.messageBus.dispatch(topic, message);
 	}
 
 	/* (non-Javadoc)

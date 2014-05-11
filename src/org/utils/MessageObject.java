@@ -1,28 +1,15 @@
 package org.utils;
 
-import java.io.Serializable;
-import java.net.InetAddress;
-import java.net.UnknownHostException;
+import java.util.HashMap;
 
-public class MessageObject implements Serializable {
+import com.google.gson.Gson;
 
-	private static final long serialVersionUID = 1L;
-	private String clientID;
-	private String message;
-	private String command = "";
-	private boolean error = false;
-	
-	private InetAddress inetAddress;
-	private int port;
-	
-	public MessageObject() {
-		super();		
-		
-	}
+public class MessageObject {
+	private HashMap<Object, Object> data = new HashMap<Object, Object>();
 	
 	public MessageObject(String message) {
 		super();
-		this.message = message;
+		this.setMessage(message);
 	}
 	
 	public MessageObject(String message, String command){
@@ -30,63 +17,54 @@ public class MessageObject implements Serializable {
 		this.setCommand(command);
 	}	
 
-
+	public MessageObject() {
+		super();
+	}
 
 	@Override
 	public String toString() {
-		return "MessageObject [clientID=" + clientID + ", message=" + message
-				+ ", command=" + command + ", error=" + error
-				+ ", inetAddress=" + inetAddress + ", port=" + port + "]";
+		Gson gson = new Gson();
+		return gson.toJson(this);
 	}
-
+	
 	public String getClientID() {
-		return clientID;
+		return (String) data.get("clientID");
 	}
 
 	public void setClientID(String clientID) {
-		this.clientID = clientID;
+		data.put("clientID", clientID);
 	}
 
 	public String getMessage() {
-		return message;
+		return (String) data.get("message");
 	}
 
 	public void setMessage(String message) {
-		this.message = message;
-	}
-
-	public InetAddress getInetAddress() {
-		return inetAddress;
-	}
-
-	public void setInetAddress(InetAddress inetAddress) {
-		this.inetAddress = inetAddress;
-	}
-
-	public int getPort() {
-		return port;
-	}
-
-	public void setPort(int port) {
-		this.port = port;
+		data.put("message", message);
 	}
 
 	public String getCommand() {
-		return command;
+		return (String) data.get("command");
 	}
 
 	public void setCommand(String command) {
-		this.command = command;
+		data.put("command", command);
 	}
 
-	public boolean isError() {
-		return error;
+	public Boolean isError() {
+		return (Boolean) data.get("error");
 	}
 
-	public void setError(boolean error) {
-		this.error = error;
+	public void setError(Boolean error) {
+		data.put("error", error);
 	}
 	
-	
+	public void setCustomString(String key, String value){
+		data.put(key, value);
+	}
+
+	public String getCustomString(String key){
+		return (String) data.get(key);
+	}
 
 }

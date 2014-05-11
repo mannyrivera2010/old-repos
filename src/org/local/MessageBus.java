@@ -35,7 +35,7 @@ public class MessageBus implements MessageBusI {
 	 * @see org.interfaces.MessageBusI#dispatch(java.lang.String, java.lang.String)
 	 */
 	@Override
-	public void dispatch(String topic, String message, String ClientID) {
+	public void dispatch(String topic, String message) {
 		Set<ClientI> clientsWithTopic = topicSubscriberMgr.filterSubscribersByTopic(topic);
 		
 		for(ClientI client : clientsWithTopic){
