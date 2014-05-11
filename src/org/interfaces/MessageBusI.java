@@ -1,7 +1,5 @@
 package org.interfaces;
 
-import org.networked.Client;
-
 /**
  * The Interface MessageBusI.
  */
