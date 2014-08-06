@@ -58,6 +58,7 @@ dependencies {
   //3rd party
   compile "org.freemarker:freemarker:2.3.20"
   compile "org.thymeleaf:thymeleaf:2.1.2.RELEASE"
+  compile "org.rythmengine:rythm-engine:1.0-b8"
   
 
 }

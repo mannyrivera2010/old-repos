@@ -1,0 +1,44 @@
+:collectDeps UP-TO-DATE
+:runMod
+Creating properties on demand (a.k.a. dynamic properties) has been deprecated and is scheduled to be removed in Gradle 2.0. Please read http://gradle.org/docs/current/dsl/org.gradle.api.plugins.ExtraPropertiesExtension.html for information on the replacement for dynamic properties.
+Deprecated dynamic property: "args" on "task ':runMod'", value: "[runmod, com.earasoft~...".
+Current dir:C:\Users\riverema\git\mod-earasoft-site1
+Current dir using System:C:\Users\riverema\git\mod-earasoft-site1
+Terminate batch job (Y/N)? 
+:collectDeps UP-TO-DATE
+:runMod
+Creating properties on demand (a.k.a. dynamic properties) has been deprecated and is scheduled to be removed in Gradle 2.0. Please read http://gradle.org/docs/current/dsl/org.gradle.api.plugins.ExtraPropertiesExtension.html for information on the replacement for dynamic properties.
+Deprecated dynamic property: "args" on "task ':runMod'", value: "[runmod, com.earasoft~...".
+Terminate batch job (Y/N)? 
+:collectDeps UP-TO-DATE
+:runMod
+Creating properties on demand (a.k.a. dynamic properties) has been deprecated and is scheduled to be removed in Gradle 2.0. Please read http://gradle.org/docs/current/dsl/org.gradle.api.plugins.ExtraPropertiesExtension.html for information on the replacement for dynamic properties.
+Deprecated dynamic property: "args" on "task ':runMod'", value: "[runmod, com.earasoft~...".
+Current dir:C:\Users\riverema\git\mod-earasoft-site1
+Current dir using System:C:\Users\riverema\git\mod-earasoft-site1
+java.io.FileNotFoundException: Template "C:\\Users\\riverema\\git\\mod-earasoft-site1\\build\\mods\\com.earasoft~site1~1.0.0-final\\templates\\index.ftl" not found.
+Terminate batch job (Y/N)? Terminate batch job (Y/N)? 
+:collectDeps UP-TO-DATE
+:runMod
+Creating properties on demand (a.k.a. dynamic properties) has been deprecated and is scheduled to be removed in Gradle 2.0. Please read http://gradle.org/docs/current/dsl/org.gradle.api.plugins.ExtraPropertiesExtension.html for information on the replacement for dynamic properties.
+Deprecated dynamic property: "args" on "task ':runMod'", value: "[runmod, com.earasoft~...".
+Current dir:C:\Users\riverema\git\mod-earasoft-site1
+Current dir using System:C:\Users\riverema\git\mod-earasoft-site1
+java.io.FileNotFoundException: Template "C:\\Users\\riverema\\git\\mod-earasoft-site1\\build\\mods\\com.earasoft~site1~1.0.0-final\\templates\\index.ftl" not found.
+Terminate batch job (Y/N)? 
+Terminate batch job (Y/N)? Terminate batch job (Y/N)? 
+:collectDeps UP-TO-DATE
+:runMod
+Creating properties on demand (a.k.a. dynamic properties) has been deprecated and is scheduled to be removed in Gradle 2.0. Please read http://gradle.org/docs/current/dsl/org.gradle.api.plugins.ExtraPropertiesExtension.html for information on the replacement for dynamic properties.
+Deprecated dynamic property: "args" on "task ':runMod'", value: "[runmod, com.earasoft~...".
+Current dir:C:\Users\riverema\git\mod-earasoft-site1
+Current dir using System:C:\Users\riverema\git\mod-earasoft-site1
+java.io.FileNotFoundException: Template "C:\\Users\\riverema\\git\\mod-earasoft-site1\\build\\mods\\com.earasoft~site1~1.0.0-final\\templates\\index.ftl" not found.
+Terminate batch job (Y/N)? Terminate batch job (Y/N)? 
+:collectDeps UP-TO-DATE
+:runMod
+Creating properties on demand (a.k.a. dynamic properties) has been deprecated and is scheduled to be removed in Gradle 2.0. Please read http://gradle.org/docs/current/dsl/org.gradle.api.plugins.ExtraPropertiesExtension.html for information on the replacement for dynamic properties.
+Deprecated dynamic property: "args" on "task ':runMod'", value: "[runmod, com.earasoft~...".
+Current dir using System:C:\Users\riverema\git\mod-earasoft-site1\build\mods\com.earasoft~site1~1.0.0-final\templates\index.ftl
+java.io.FileNotFoundException: Template "C:\\Users\\riverema\\git\\mod-earasoft-site1\\build\\mods\\com.earasoft~site1~1.0.0-final\\templates\\index.ftl" not found.
+Terminate batch job (Y/N)? 
