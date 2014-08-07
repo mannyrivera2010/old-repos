@@ -21,7 +21,7 @@ public class IndexHandler extends BaseRequestHander {
     }
 
     @Override
-    public void post(HttpServerRequest httpServerRequest) throws Exception{
+    public void get(HttpServerRequest httpServerRequest) throws Exception{
         ConcurrentMap<String ,Integer> indexCounter = vertx.sharedData().getMap("Index");
         indexCounter.put("counter", indexCounter.getOrDefault("counter", 0) + 1); 
 

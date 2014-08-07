@@ -163,23 +163,28 @@ public class BaseRequestHander implements Handler<HttpServerRequest>, IHttpServe
         }
     }
     
-    private Pattern cookiePattern = Pattern.compile("([^=]+)=([^\\;]*);?\\s?");
+    
 
     public Map<String, String> parseCookieString(String cookies) {
-        if(cookies == null)
-            return null;
-        
         Map<String, String> output = new HashMap<String, String>();
-        Matcher matcher = cookiePattern.matcher(cookies);
-        while (matcher.find()) {
-            int groupCount = matcher.groupCount();
-            //System.out.println("matched: " + matcher.group(0));
-            for (int groupIndex = 0; groupIndex <= groupCount; ++groupIndex) {
-                //System.out.println("group[" + groupIndex + "]=" + matcher.group(groupIndex));
+        Pattern cookiePattern = Pattern.compile("([^=]+)=([^\\;]*);?\\s?");
+        if(cookies == null)
+            return output;
+        
+        try{
+            Matcher matcher = cookiePattern.matcher(cookies);
+            while (matcher.find()) {
+                int groupCount = matcher.groupCount();
+                //System.out.println("matched: " + matcher.group(0));
+                for (int groupIndex = 0; groupIndex <= groupCount; ++groupIndex) {
+                    //System.out.println("group[" + groupIndex + "]=" + matcher.group(groupIndex));
+                }
+                String cookieKey = matcher.group(1);
+                String cookieValue = matcher.group(2);
+                output.put(cookieKey, cookieValue);
             }
-            String cookieKey = matcher.group(1);
-            String cookieValue = matcher.group(2);
-            output.put(cookieKey, cookieValue);
+        }catch(Exception e){
+            throw new RuntimeException("Error Parsing Cookie");
         }
         return output;
     }

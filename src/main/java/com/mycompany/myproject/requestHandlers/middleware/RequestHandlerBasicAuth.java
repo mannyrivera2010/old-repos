@@ -2,8 +2,11 @@ package com.mycompany.myproject.requestHandlers.middleware;
 
 
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
+import java.util.concurrent.ConcurrentMap;
 
 import javax.xml.bind.DatatypeConverter;
 
@@ -17,78 +20,115 @@ import com.mycompany.myproject.requestHandlers.util.BaseRequestHander;
 
 public class RequestHandlerBasicAuth extends BaseRequestHander {
     
+    private ConcurrentMap<String, Object> sessionsSet;
+            
     public RequestHandlerBasicAuth(Vertx vertx, Handler<HttpServerRequest> next) {
         super(vertx, next);
+        this.sessionsSet = vertx.sharedData().getMap("users.sessions");
     }
 
     @Override
     public void get(HttpServerRequest httpServerRequest) {
         String authorization = httpServerRequest.headers().get("authorization");
         String cookie = httpServerRequest.headers().get("cookie");
-        System.out.println(authorization);
-        System.out.println(cookie);
-        if(authorization == null && cookie == null){
+        System.out.println("-----------------------------------");
+        Map<String, String> userInfoMap = extractUserInfo(authorization);
+        String cookieID = parseCookieString(cookie).get("id");
+        
+        System.out.println("get-infoMap>" + userInfoMap.toString());
+        System.out.println("get-cookie>"+cookieID);
+        
+        if(userInfoMap.size() == 0 && cookieID == null){
+            System.out.println("userInfoMap.size() == 0 && cookieID == null  >> TRUE");
             handleFail(httpServerRequest);
         }else{
-            if(cookie == null){
-                if(checkUserAndPassword(authorization)){
+            System.out.println("userInfoMap.size() == 0 && cookieID == null  >> FALSE");
+            if(cookieID == null){
+                System.out.println("cookieID == null >> TRUE");
+                if(checkUserAndPassword(userInfoMap)){
                     UUID idOne = UUID.randomUUID();
-                    
+                    System.out.println("get-Passed the Check > UUID >>" + idOne );
                     httpServerRequest.response().putHeader("Set-Cookie", "id="+idOne+"; path=/");
-                    Set<String> sessionsSet = vertx.sharedData().getSet("users.sessions");
-                    sessionsSet.add(idOne.toString());
-                    
+                    sessionsSet.put(idOne.toString(),"");
                     handleSuccess(httpServerRequest);
                 }else{
+                    System.out.println("if(checkUserAndPassword(userInfoMap)){  FALSE");
                     handleFail(httpServerRequest);
                 }
             }else{
-                if(validateCookie(cookie, httpServerRequest) == true){
+                if(validateCookie(cookieID, httpServerRequest)){
+                    System.out.println("if(validateCookie(cookieID, httpServerRequest)){  TRUE");
                     handleSuccess(httpServerRequest);
+                    
+                }else{
+                    System.out.println("if(validateCookie(cookieID, httpServerRequest)){  FALSE");
+                    handleFail(httpServerRequest);
                 }
             }
         }
     }
     
-    private boolean validateCookie(String cookie, HttpServerRequest httpServerRequest){
-       
-        String cookieID = parseCookieString(cookie).get("id");
-        if(cookieID == null)
-            //handleFail(httpServerRequest);
-            return false;
-        System.out.println(cookieID);
+    private boolean validateCookie(String cookieID, HttpServerRequest httpServerRequest){
+        System.out.println("validateCookie-cookieID>" + cookieID);
         if(checkCookieSession(cookieID)){
-            //handleSuccess(httpServerRequest);
             return true;
         }else{
             return false;
         }
     }
     private boolean checkCookieSession(String cookieAuth){
-        Set<String> sessionsSet = vertx.sharedData().getSet("users.sessions");
+        System.out.println("checkCookieSession-entering>" + cookieAuth);
+        System.out.println("checkCookieSession-sessionsSet>" + sessionsSet);
+        if(sessionsSet == null)
+           return false;
+        System.out.println("checkCookieSession-cookieAuth>" + cookieAuth);
+        
+        boolean idInSessionStore = sessionsSet.containsKey(cookieAuth);
+        System.out.println("checkCookieSession-cookieAuthContains>" + sessionsSet.containsKey(cookieAuth));
         
         
-        if(sessionsSet.contains(cookieAuth)){
+        if(idInSessionStore){
             return true;
         }else{
             return false;
         }
     }
     
-    private boolean checkUserAndPassword(String authorization){
+    private Map<String, String> extractUserInfo(String authorization){
+        Map<String, String> infoMap = new HashMap<String, String>();
         if(authorization == null)
-            return false;
-        String[] authorizationSplit = authorization.trim().split(" ");
-        String decode1= new String(DatatypeConverter.parseBase64Binary(authorizationSplit[1]));
-        System.out.println(decode1);
-        String[] userPasswordSplit = decode1.split(":");
-        if(userPasswordSplit.length != 2){
-            return false;
-        }
-        String userName = userPasswordSplit[0];
-        String password = userPasswordSplit[1];
+            return infoMap;
         
-        if(userName.trim().equalsIgnoreCase("manny") && password.equals("pass")){
+        try{
+            String[] authorizationSplit = authorization.trim().split(" ");
+            String decode1= new String(DatatypeConverter.parseBase64Binary(authorizationSplit[1]));
+            System.out.println("checkUserAndPassword-decode1>"+decode1);
+            String[] userPasswordSplit = decode1.split(":");
+            if(userPasswordSplit.length == 2){
+                infoMap.put("username", userPasswordSplit[0]);
+                infoMap.put("password", userPasswordSplit[1]);
+            }
+        }catch(Exception e){
+            throw new RuntimeException("Error Extracting User Info");
+        }
+        return infoMap;
+    }
+    
+    
+    private boolean checkUserAndPassword(Map<String, String> infoUserMap){
+        System.out.println("checkUserAndPassword-infoMap>"+infoUserMap.toString());
+        
+        String inputUsername = "manny";
+        String inputPassword = "pass";
+        
+        String userUserName = infoUserMap.get("username").trim();
+        String userPassword = infoUserMap.get("password");
+        
+        boolean sameUsername = inputUsername.equals(userUserName);
+        boolean samePassword = inputPassword.equals(userPassword);
+ 
+        System.out.println("sameUsername && samePassword >>" + (sameUsername && samePassword));
+        if( sameUsername && samePassword ){
             return true;
         }else{
             return false;
@@ -101,6 +141,7 @@ public class RequestHandlerBasicAuth extends BaseRequestHander {
     }
     private void handleFail(HttpServerRequest httpServerRequest){
         httpServerRequest.response().setStatusCode(401);
+        httpServerRequest.response().putHeader("Set-Cookie", "id=INVALID; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT");
         httpServerRequest.response().putHeader("WWW-Authenticate", "Basic realm=\"Authentication required\"");
         httpServerRequest.response().end("Not Authorized");
     }

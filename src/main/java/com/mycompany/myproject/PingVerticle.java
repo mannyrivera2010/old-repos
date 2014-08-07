@@ -28,6 +28,7 @@ import org.vertx.java.core.http.ServerWebSocket;
 import org.vertx.java.core.logging.Logger;
 import org.vertx.java.platform.Verticle;
 
+import com.mycompany.myproject.requestHandlers.BasicStaticHandler;
 import com.mycompany.myproject.requestHandlers.IndexHandler;
 import com.mycompany.myproject.requestHandlers.NoMatchHandler;
 import com.mycompany.myproject.requestHandlers.TestHandler;
@@ -113,6 +114,7 @@ public class PingVerticle extends Verticle {
         matcher.all("/", new IndexHandler(vertx));
         matcher.all("/ws", new WSHandler(vertx));
         matcher.all("/test", new RequestHandlerBasicAuth(vertx, new TestHandler(vertx)));
+        matcher.allWithRegEx("/static/?(\\S*)", new BasicStaticHandler(vertx));
         matcher.noMatch(new NoMatchHandler(vertx));
         return matcher;
     }
