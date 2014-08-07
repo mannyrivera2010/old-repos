@@ -1,4 +1,4 @@
-package com.mycompany.myproject;
+package demo;
 
 import org.rythmengine.Rythm;
 
