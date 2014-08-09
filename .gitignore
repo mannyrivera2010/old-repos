@@ -2,6 +2,7 @@
 .gradle
 .idea
 .classpath
+.project
 .settings
 .yardoc
 .yardopts
