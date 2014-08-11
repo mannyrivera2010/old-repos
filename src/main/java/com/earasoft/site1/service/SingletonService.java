@@ -9,14 +9,14 @@ import org.vertx.java.core.impl.VertxInternal;
 
 import freemarker.template.Configuration;
 
-public class ClassicSingleton {
-    private static ClassicSingleton instance = null;
+public class SingletonService {
+    private static SingletonService instance = null;
     private Configuration cfg;
     
     public Configuration getCfg() {
         return cfg;
     }
-    protected ClassicSingleton(Vertx vertx) {
+    protected SingletonService(Vertx vertx) {
         
         this.cfg = new Configuration();
         try {
@@ -26,9 +26,9 @@ public class ClassicSingleton {
             e.printStackTrace();
         }
     }
-    public static ClassicSingleton getInstance(Vertx vertx) {
+    public static SingletonService getInstance(Vertx vertx) {
        if(instance == null) {
-          instance = new ClassicSingleton(vertx);
+          instance = new SingletonService(vertx);
        }
        return instance;
     }

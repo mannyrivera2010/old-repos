@@ -7,11 +7,11 @@ import org.vertx.java.core.Handler;
 import org.vertx.java.core.Vertx;
 import org.vertx.java.core.buffer.Buffer;
 import org.vertx.java.core.http.ServerWebSocket;
-import org.vertx.java.core.http.impl.WebSocketMatcher.Match;
+import org.vertx.java.core.json.JsonObject;
 import org.vertx.java.core.logging.Logger;
 import org.vertx.java.platform.Container;
 
-import com.earasoft.site1.wsHandler.util.BaseWSRequestHandler;
+import com.earasoft.core.http.BaseWSRequestHandler;
 
 
 public class IndexWSHandler extends BaseWSRequestHandler{
@@ -31,10 +31,31 @@ public class IndexWSHandler extends BaseWSRequestHandler{
     		this.resources = resources;
     	}
     	
+    	public void validateJson(JsonObject jsonObj){
+    		if(jsonObj.getValue("message") == null){
+    			throw new RuntimeException("JSON is not Valid");
+    		}
+    	}
+
 		@Override
 		public void handle(Buffer data) {
-			//int a = 0/0;
-            ws.writeTextFrame(data.toString());
+			JsonObject request = null;
+			try{
+				request = new JsonObject(data.toString());
+				validateJson(request);
+				request.putBoolean("Success", true);
+			}catch(Exception e){
+				request = new JsonObject();
+				request.putString("Data", data.toString());
+				request.putString("Error Message", e.getMessage());
+				request.putBoolean("Success", false);
+			}finally{
+				handleResponse(request);
+			}
+		}
+		
+		public void handleResponse(JsonObject jsonObj) {
+            ws.writeTextFrame(jsonObj.encodePrettily());
 		}
     }
     

@@ -1,4 +1,4 @@
-package com.earasoft.site1.requestHandlers.middleware;
+package com.earasoft.core.middleware;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -7,18 +7,15 @@ import java.util.concurrent.ConcurrentMap;
 
 import javax.xml.bind.DatatypeConverter;
 
-import org.vertx.java.core.Handler;
-import org.vertx.java.core.Vertx;
 import org.vertx.java.core.http.HttpServerRequest;
-import org.vertx.java.platform.Container;
 
-import com.earasoft.site1.requestHandlers.util.BaseRequestHander;
+import com.earasoft.core.http.BaseRequestHander;
 
-public class MiddlewareBasicAuth extends BaseRequestHander {
+public class BasicAuth extends BaseRequestHander {
     
     private ConcurrentMap<String, Object> sessionsSet;
 	
-    public MiddlewareBasicAuth(BaseRequestHander next) {
+    public BasicAuth(BaseRequestHander next) {
         super(next);
         this.container = next.getContainer();
         this.vertx = next.getVertx();

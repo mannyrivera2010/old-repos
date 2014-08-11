@@ -5,7 +5,7 @@ import org.vertx.java.core.Vertx;
 import org.vertx.java.core.http.HttpServerRequest;
 import org.vertx.java.platform.Container;
 
-import com.earasoft.site1.requestHandlers.util.BaseRequestHander;
+import com.earasoft.core.http.BaseRequestHander;
 
 public class NoMatchHandler extends BaseRequestHander {
 

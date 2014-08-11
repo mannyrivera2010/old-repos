@@ -1,20 +1,16 @@
-package com.earasoft.site1.wsHandler.middleware;
+package com.earasoft.core.middleware.ws;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
 
-import org.vertx.java.core.Handler;
-import org.vertx.java.core.Vertx;
-import org.vertx.java.core.http.HttpServerRequest;
 import org.vertx.java.core.http.ServerWebSocket;
 
-import com.earasoft.site1.requestHandlers.util.BaseRequestHander;
-import com.earasoft.site1.wsHandler.util.BaseWSRequestHandler;
+import com.earasoft.core.http.BaseWSRequestHandler;
 
-public class MiddlewareWSCatchExceptions extends BaseWSRequestHandler {
+public class WSCatchExceptions extends BaseWSRequestHandler {
 
 	
-    public MiddlewareWSCatchExceptions(BaseWSRequestHandler next) {
+    public WSCatchExceptions(BaseWSRequestHandler next) {
         super(next);
         this.container = next.getContainer();
         this.vertx = next.getVertx();

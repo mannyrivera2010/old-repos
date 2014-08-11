@@ -4,7 +4,7 @@ import org.vertx.java.core.Vertx;
 import org.vertx.java.core.http.HttpServerRequest;
 import org.vertx.java.platform.Container;
 
-import com.earasoft.site1.requestHandlers.util.BaseRequestHander;
+import com.earasoft.core.http.BaseRequestHander;
 
 public class BasicStaticHandler extends BaseRequestHander {
 
@@ -19,12 +19,8 @@ public class BasicStaticHandler extends BaseRequestHander {
         httpServerRequest.response().putHeader("Text-Content","text/html");
         MultiMap requestParams = httpServerRequest.params();
         httpServerRequest.response().write(requestParams.get("param0").toString()+ "<br>Hello");
-
-        
         httpServerRequest.response().end();
         
-        
-
     }
     
 }

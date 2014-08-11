@@ -2,7 +2,6 @@ package com.mycompany.myproject.test.unit;
 
 import com.earasoft.site1.MainVerticle;
 
-import org.junit.Assert;
 import org.junit.Test;
 
 import static org.junit.Assert.*;

@@ -1,4 +1,4 @@
-package com.earasoft.site1.requestHandlers.util;
+package com.earasoft.core.http;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -16,7 +16,7 @@ import org.vertx.java.core.Vertx;
 import org.vertx.java.core.http.HttpServerRequest;
 import org.vertx.java.platform.Container;
 
-import com.earasoft.site1.service.ClassicSingleton;
+import com.earasoft.site1.service.SingletonService;
 
 import freemarker.template.Configuration;
 import freemarker.template.Template;
@@ -140,7 +140,7 @@ public class BaseRequestHander implements Handler<HttpServerRequest>, IHttpServe
     public String render(String fileName, Map<String, Object> data ) throws IOException, TemplateException{
         ByteArrayOutputStream baStream = new ByteArrayOutputStream();
         Writer out = new OutputStreamWriter(baStream);
-        Configuration cfg = ClassicSingleton.getInstance(vertx).getCfg();
+        Configuration cfg = SingletonService.getInstance(vertx).getCfg();
         Template template;
         template = cfg.getTemplate(fileName);
         template.process(data, out);
@@ -190,4 +190,5 @@ public class BaseRequestHander implements Handler<HttpServerRequest>, IHttpServe
         }
         return output;
     }
+    
 }

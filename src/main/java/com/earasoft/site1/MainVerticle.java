@@ -7,21 +7,19 @@ import org.vertx.java.core.http.HttpServer;
 import org.vertx.java.core.http.HttpServerRequest;
 import org.vertx.java.core.http.RouteMatcher;
 import org.vertx.java.core.http.ServerWebSocket;
-import org.vertx.java.core.http.impl.WebSocketMatcher;
 import org.vertx.java.core.logging.Logger;
 import org.vertx.java.platform.Verticle;
 
+import com.earasoft.core.middleware.BasicAuth;
+import com.earasoft.core.middleware.CatchExceptions;
+import com.earasoft.core.middleware.ws.WSCatchExceptions;
 import com.earasoft.site1.requestHandlers.BasicStaticHandler;
 import com.earasoft.site1.requestHandlers.IndexHandler;
 import com.earasoft.site1.requestHandlers.NoMatchHandler;
 import com.earasoft.site1.requestHandlers.TestHandler;
 import com.earasoft.site1.requestHandlers.WSHandler;
-import com.earasoft.site1.requestHandlers.middleware.MiddlewareBasicAuth;
-import com.earasoft.site1.requestHandlers.middleware.MiddlewareCatchExceptions;
-import com.earasoft.site1.requestHandlers.util.BaseRequestHander;
-import com.earasoft.site1.service.ClassicSingleton;
+import com.earasoft.site1.service.SingletonService;
 import com.earasoft.site1.wsHandler.IndexWSHandler;
-import com.earasoft.site1.wsHandler.middleware.MiddlewareWSCatchExceptions;
 
 /*
  * This is a simple Java is FrameWork
@@ -39,7 +37,7 @@ public class MainVerticle extends Verticle {
         server.requestHandler(requestHandlerPreChain());
         server.websocketHandler(requestWSHandlerPreChain());
         
-        ClassicSingleton.getInstance(vertx);
+        SingletonService.getInstance(vertx);
         
         server.listen(DEFAULT_PORT, DEFAULT_ADDRESS,
                 new AsyncResultHandler<HttpServer>() {
@@ -61,13 +59,13 @@ public class MainVerticle extends Verticle {
     private Handler<ServerWebSocket> requestWSHandlerPreChain(){
     	//WebSocketMatcher matcher = new WebSocketMatcher();
     	//matcher.addPattern("/app", );
-    	Handler<ServerWebSocket> middlewareWSCatchExceptions = new MiddlewareWSCatchExceptions(new IndexWSHandler(container, vertx));
+    	Handler<ServerWebSocket> middlewareWSCatchExceptions = new WSCatchExceptions(new IndexWSHandler(container, vertx));
     	return middlewareWSCatchExceptions;
     }
 
     private Handler<HttpServerRequest> requestHandlerPreChain(){
     	Handler<HttpServerRequest> routeMatcher = routeMatcher();
-    	Handler<HttpServerRequest> middlewareCatchExceptions = new MiddlewareCatchExceptions(container, vertx, routeMatcher); 
+    	Handler<HttpServerRequest> middlewareCatchExceptions = new CatchExceptions(container, vertx, routeMatcher); 
         return middlewareCatchExceptions;
     }
 
@@ -75,7 +73,7 @@ public class MainVerticle extends Verticle {
         RouteMatcher matcher = new RouteMatcher();
         matcher.all("/", new IndexHandler(container, vertx));
         matcher.all("/ws", new WSHandler(container, vertx));
-        matcher.all("/test", new MiddlewareBasicAuth(new TestHandler(container, vertx)));
+        matcher.all("/test", new BasicAuth(new TestHandler(container, vertx)));
         matcher.allWithRegEx("/static/?(\\S*)", new BasicStaticHandler(container, vertx));
         matcher.noMatch(new NoMatchHandler(container, vertx));
         return matcher;
