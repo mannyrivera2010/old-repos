@@ -1,6 +1,7 @@
 package com.mycompany.myproject.test.unit;
 
-import com.mycompany.myproject.PingVerticle;
+import com.earasoft.site1.MainVerticle;
+
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -27,7 +28,7 @@ public class ExampleUnitTest {
 
   @Test
   public void testVerticle() {
-    PingVerticle vert = new PingVerticle();
+    MainVerticle vert = new MainVerticle();
 
     // Interrogate your classes directly....
 

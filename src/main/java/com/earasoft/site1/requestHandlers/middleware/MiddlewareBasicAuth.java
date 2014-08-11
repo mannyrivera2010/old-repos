@@ -1,29 +1,28 @@
-package com.mycompany.myproject.requestHandlers.middleware;
-
-
+package com.earasoft.site1.requestHandlers.middleware;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentMap;
 
 import javax.xml.bind.DatatypeConverter;
 
-import io.netty.handler.codec.base64.Base64;
-
 import org.vertx.java.core.Handler;
 import org.vertx.java.core.Vertx;
 import org.vertx.java.core.http.HttpServerRequest;
+import org.vertx.java.platform.Container;
 
-import com.mycompany.myproject.requestHandlers.util.BaseRequestHander;
+import com.earasoft.site1.requestHandlers.util.BaseRequestHander;
 
-public class RequestHandlerBasicAuth extends BaseRequestHander {
+public class MiddlewareBasicAuth extends BaseRequestHander {
     
     private ConcurrentMap<String, Object> sessionsSet;
-            
-    public RequestHandlerBasicAuth(Vertx vertx, Handler<HttpServerRequest> next) {
-        super(vertx, next);
+	
+    public MiddlewareBasicAuth(BaseRequestHander next) {
+        super(next);
+        this.container = next.getContainer();
+        this.vertx = next.getVertx();
+        
         this.sessionsSet = vertx.sharedData().getMap("users.sessions");
     }
 
@@ -134,7 +133,6 @@ public class RequestHandlerBasicAuth extends BaseRequestHander {
             return false;
         }
     }
-    
     
     private void handleSuccess(HttpServerRequest httpServerRequest){
         next.handle(httpServerRequest);

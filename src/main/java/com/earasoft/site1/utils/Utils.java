@@ -1,4 +1,4 @@
-package com.mycompany.myproject.utils;
+package com.earasoft.site1.utils;
 
 import java.util.HashMap;
 import java.util.Map;

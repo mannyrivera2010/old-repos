@@ -1,16 +1,15 @@
-package com.mycompany.myproject.requestHandlers;
-import java.util.Map;
-
+package com.earasoft.site1.requestHandlers;
 import org.vertx.java.core.MultiMap;
 import org.vertx.java.core.Vertx;
 import org.vertx.java.core.http.HttpServerRequest;
+import org.vertx.java.platform.Container;
 
-import com.mycompany.myproject.requestHandlers.util.BaseRequestHander;
+import com.earasoft.site1.requestHandlers.util.BaseRequestHander;
 
 public class BasicStaticHandler extends BaseRequestHander {
 
-    public BasicStaticHandler(Vertx vertx) {
-        super(vertx);
+    public BasicStaticHandler(Container container, Vertx vertx) {
+        super(container, vertx);
     }
 
     @Override

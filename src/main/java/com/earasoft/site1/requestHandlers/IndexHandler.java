@@ -1,6 +1,5 @@
-package com.mycompany.myproject.requestHandlers;
+package com.earasoft.site1.requestHandlers;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -9,15 +8,14 @@ import java.util.concurrent.ConcurrentMap;
 
 import org.vertx.java.core.Vertx;
 import org.vertx.java.core.http.HttpServerRequest;
+import org.vertx.java.platform.Container;
 
-import com.mycompany.myproject.requestHandlers.util.BaseRequestHander;
-
-import freemarker.template.TemplateException;
+import com.earasoft.site1.requestHandlers.util.BaseRequestHander;
 
 public class IndexHandler extends BaseRequestHander {
 
-    public IndexHandler(Vertx vertx) {
-        super(vertx);
+    public IndexHandler(Container container, Vertx vertx) {
+    	super(container, vertx);
     }
 
     @Override

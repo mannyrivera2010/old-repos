@@ -1,4 +1,4 @@
-package com.mycompany.myproject.requestHandlers.util;
+package com.earasoft.site1.requestHandlers.util;
 
 import org.vertx.java.core.http.HttpServerRequest;
 

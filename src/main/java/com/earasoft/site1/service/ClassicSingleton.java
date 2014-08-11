@@ -1,4 +1,4 @@
-package com.mycompany.myproject.service;
+package com.earasoft.site1.service;
 
 import java.io.File;
 import java.io.IOException;

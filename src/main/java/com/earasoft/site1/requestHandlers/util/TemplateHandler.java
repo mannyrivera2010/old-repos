@@ -1,15 +1,14 @@
-package com.mycompany.myproject.requestHandlers;
+package com.earasoft.site1.requestHandlers.util;
 
 
 import org.vertx.java.core.Vertx;
 import org.vertx.java.core.http.HttpServerRequest;
-
-import com.mycompany.myproject.requestHandlers.util.BaseRequestHander;
+import org.vertx.java.platform.Container;
 
 public class TemplateHandler extends BaseRequestHander {
 
-    public TemplateHandler(Vertx vertx) {
-        super(vertx);
+    public TemplateHandler(Container container, Vertx vertx) {
+        super(container, vertx);
     }
 
     @Override

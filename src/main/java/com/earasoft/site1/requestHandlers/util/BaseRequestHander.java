@@ -1,4 +1,4 @@
-package com.mycompany.myproject.requestHandlers.util;
+package com.earasoft.site1.requestHandlers.util;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -14,8 +14,9 @@ import java.util.regex.Pattern;
 import org.vertx.java.core.Handler;
 import org.vertx.java.core.Vertx;
 import org.vertx.java.core.http.HttpServerRequest;
+import org.vertx.java.platform.Container;
 
-import com.mycompany.myproject.service.ClassicSingleton;
+import com.earasoft.site1.service.ClassicSingleton;
 
 import freemarker.template.Configuration;
 import freemarker.template.Template;
@@ -24,29 +25,32 @@ import freemarker.template.TemplateException;
 public class BaseRequestHander implements Handler<HttpServerRequest>, IHttpServerRequestVerbs {
 
     protected Vertx vertx;
+	protected Container container;
     protected Handler<HttpServerRequest> next;
     
-    public BaseRequestHander(){
-        if(this.vertx == null){
-            throw new RuntimeException("Missing Vertx Instance");
-        }
-        
-        if(this.next ==null){
-            throw new RuntimeException("Missing Next HttpServerRequest Chain Instance");
-        }
+    public BaseRequestHander(Container container, Vertx vertx){
+        this.container = container;
+    	this.vertx = vertx;
     }
-    
-    public BaseRequestHander(Vertx vertx){
-        this.vertx = vertx;
-    }
-    
-    public BaseRequestHander(Vertx vertx, Handler<HttpServerRequest> next){
+       
+    public BaseRequestHander(BaseRequestHander next) {
         this.next = next;
     }
-    
-    public BaseRequestHander(Handler<HttpServerRequest> next) {
-        this.next = next;
-    }
+
+	public BaseRequestHander(Container container, Vertx vertx,
+			Handler<HttpServerRequest> next) {
+        this.container = container;
+    	this.vertx = vertx;
+    	this.next = next;
+	}
+
+	public Vertx getVertx() {
+		return vertx;
+	}
+
+	public Container getContainer() {
+		return container;
+	}
 
     @Override
     public void handle(HttpServerRequest httpServerRequest) {
@@ -162,8 +166,6 @@ public class BaseRequestHander implements Handler<HttpServerRequest>, IHttpServe
             httpServerRequest.response().end("Internal Error");
         }
     }
-    
-    
 
     public Map<String, String> parseCookieString(String cookies) {
         Map<String, String> output = new HashMap<String, String>();

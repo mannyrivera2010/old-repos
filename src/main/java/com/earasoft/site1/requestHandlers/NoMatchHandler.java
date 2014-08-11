@@ -1,15 +1,16 @@
-package com.mycompany.myproject.requestHandlers;
+package com.earasoft.site1.requestHandlers;
 
 
 import org.vertx.java.core.Vertx;
 import org.vertx.java.core.http.HttpServerRequest;
+import org.vertx.java.platform.Container;
 
-import com.mycompany.myproject.requestHandlers.util.BaseRequestHander;
+import com.earasoft.site1.requestHandlers.util.BaseRequestHander;
 
 public class NoMatchHandler extends BaseRequestHander {
 
-    public NoMatchHandler(Vertx vertx) {
-        super(vertx);
+    public NoMatchHandler(Container container, Vertx vertx) {
+    	super(container, vertx);
     }
 
     @Override
