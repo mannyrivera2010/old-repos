@@ -12,15 +12,24 @@ import freemarker.template.Configuration;
 public class SingletonService {
     private static SingletonService instance = null;
     private Configuration cfg;
+    private File vertxPath;
     
-    public Configuration getCfg() {
+    public File getVertxPath() {
+		return vertxPath;
+	}
+
+
+	public Configuration getCfg() {
         return cfg;
     }
+    
+    
     protected SingletonService(Vertx vertx) {
         
         this.cfg = new Configuration();
         try {
-            cfg.setDirectoryForTemplateLoading(new File(PathAdjuster.adjust((VertxInternal) vertx,"")));
+        	this.vertxPath = new File(PathAdjuster.adjust((VertxInternal) vertx,""));
+            cfg.setDirectoryForTemplateLoading(this.vertxPath);
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();

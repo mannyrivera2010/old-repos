@@ -14,6 +14,7 @@ import com.earasoft.core.middleware.BasicAuth;
 import com.earasoft.core.middleware.CatchExceptions;
 import com.earasoft.core.middleware.ws.WSCatchExceptions;
 import com.earasoft.site1.requestHandlers.BasicStaticHandler;
+import com.earasoft.site1.requestHandlers.BootHandler;
 import com.earasoft.site1.requestHandlers.IndexHandler;
 import com.earasoft.site1.requestHandlers.NoMatchHandler;
 import com.earasoft.site1.requestHandlers.TestHandler;
@@ -72,6 +73,7 @@ public class MainVerticle extends Verticle {
     protected RouteMatcher routeMatcher() {
         RouteMatcher matcher = new RouteMatcher();
         matcher.all("/", new IndexHandler(container, vertx));
+        matcher.all("/boot", new BootHandler(container, vertx));
         matcher.all("/ws", new WSHandler(container, vertx));
         matcher.all("/test", new BasicAuth(new TestHandler(container, vertx)));
         matcher.allWithRegEx("/static/?(\\S*)", new BasicStaticHandler(container, vertx));

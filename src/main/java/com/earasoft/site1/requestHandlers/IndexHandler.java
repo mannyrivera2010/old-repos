@@ -21,12 +21,7 @@ public class IndexHandler extends BaseRequestHander {
     @Override
     public void get(HttpServerRequest httpServerRequest) throws Exception{
         ConcurrentMap<String ,Integer> indexCounter = vertx.sharedData().getMap("Index");
-        indexCounter.put("counter", indexCounter.getOrDefault("counter", 0) + 1); 
-
-        String FileName = "templates\\index.ftl".replace("\\\\", "\\");
-        System.out.println("Current dir using System:" +FileName);
-        
-        
+        indexCounter.put("counter", indexCounter.getOrDefault("counter", 0) + 1);         
         Map<String, Object> data = new HashMap<String, Object>();
         data.put("message", "Hello World!" + indexCounter.getOrDefault("counter", -1));
         
@@ -39,7 +34,7 @@ public class IndexHandler extends BaseRequestHander {
         
         data.put("languages", language);
         
-        httpServerRequest.response().putHeader("Set-Cookie", "aaa=111; path=/");
+        //httpServerRequest.response().putHeader("Set-Cookie", "aaa=111; path=/");
         httpServerRequest.response().end(render("templates\\index.ftl", data));
     }
     
