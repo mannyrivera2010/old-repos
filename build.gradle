@@ -1,0 +1,87 @@
+/*
+ * Earasoft
+ * Author: Manny Rivera
+ *
+ */
+apply plugin: 'java'
+apply plugin: 'groovy'
+apply plugin: 'eclipse'
+apply plugin: 'maven'
+
+defaultTasks 'tasks'
+
+group = 'com.earasoft.orientdbLearning1'
+version = '1.0.0'
+
+ext {
+    implementationTitle = 'orientdb-learning1'
+}
+
+sourceCompatibility = 1.7
+targetCompatibility = 1.7
+
+jar {
+    manifest {
+        attributes 'Implementation-Title': implementationTitle, 'Implementation-Version': version
+    }
+}
+
+
+repositories {
+    mavenCentral()
+}
+
+
+//copying all dependencies attached to 'compile' into a specific folder
+task copyAllDependencies(type: Copy, dependsOn: classes) {
+    //referring to the 'compile' configuration
+    from configurations.compile
+    into "$project.projectDir"+'/build/dist/libs'
+}
+
+task jarDist(type: Jar, dependsOn: copyAllDependencies){
+    FileTree tree = fileTree(dir: "$project.projectDir"+'/build/dist/libs')
+    List libraries = []
+    tree.visit {element ->
+        libraries << "libs//"+element.relativePath
+    }
+    
+    //
+    manifest {
+        attributes 'Implementation-Title': implementationTitle, 'Implementation-Version': version
+        //attributes 'Main-Class': mainClassName
+        attributes 'Class-path': libraries.join(' ')
+    }
+    
+    destinationDir = new File("$project.projectDir"+"/build/dist")
+
+    with jar
+}
+
+dependencies {
+    compile 'org.slf4j:slf4j-api:1.7.5'
+	compile 'com.orientechnologies:orientdb-core:2.0-M1'
+	compile 'com.orientechnologies:orient-commons:2.0-M1'
+	compile 'com.orientechnologies:orientdb-client:2.0-M1'
+	compile 'com.orientechnologies:orientdb-graphdb:2.0-M1'
+	compile 'com.tinkerpop.blueprints:blueprints-core:2.6.0'
+    compile 'org.codehaus.groovy:groovy:2.3.3'
+    compile 'org.codehaus.groovy:groovy-all:2.3.3'
+
+    testCompile "junit:junit:4.11"
+}
+test {
+    systemProperties 'property': 'value'
+}
+
+uploadArchives {
+    repositories {
+	    mavenDeployer {
+            repository(url: "file://"+"$project.projectDir"+"/build/mavenRepo")
+        }
+    }
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.0'
+}
