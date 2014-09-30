@@ -3,3 +3,17 @@ build/
 
 # Ignore Gradle GUI config
 gradle-app.setting
+
+### Java ###
+*.class
+
+### Eclipse ###
+*.pydevproject
+.metadata
+*.tmp
+*.bak
+*.swp
+*~.nib
+*.project
+*.classpath
+*/.settings
