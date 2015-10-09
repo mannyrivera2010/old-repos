@@ -1,13 +1,18 @@
 package com.earasoft.orientdb.learning1
 
+import java.text.NumberFormat
+
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
+
 import com.orientechnologies.orient.core.db.document.ODatabaseDocumentTx
 import com.orientechnologies.orient.core.metadata.schema.OClass
 import com.orientechnologies.orient.core.metadata.schema.OSchema
 import com.orientechnologies.orient.core.metadata.schema.OType
 import com.orientechnologies.orient.graph.gremlin.OGremlinHelper
-import com.sun.org.apache.bcel.internal.generic.ObjectType;
 import com.tinkerpop.blueprints.Direction
 import com.tinkerpop.blueprints.Edge
+import com.tinkerpop.blueprints.Graph
 import com.tinkerpop.blueprints.Vertex
 import com.tinkerpop.blueprints.impls.orient.OrientEdgeType
 import com.tinkerpop.blueprints.impls.orient.OrientGraph
@@ -17,13 +22,86 @@ import com.tinkerpop.blueprints.impls.orient.OrientVertexType
 import com.tinkerpop.gremlin.groovy.Gremlin
 
 class GraphMethods {
-
+    private static final Logger logger = LoggerFactory.getLogger(GraphMethods.class)
+    
 	static{
 		Gremlin.load()
 		OGremlinHelper.global().create()
-
+        MetaClassesBase.load()
 	}
+    
+    static String formatNumber(Object input){
+        return NumberFormat.getNumberInstance(Locale.US).format(input)
+    }
+    
 	static main(args) {
+        OrientGraph graph = new OrientGraph("remote:localhost/personifyTest");
+        
+        try{
+            //println "count start.."
+            //println graph.V().count()
+      
+        
+        long startTime = System.currentTimeMillis()
+        String graphsonFile = 'C:\\graphOutput-20150608.json'
+        long count = 0
+        GeneralUtils.lineIteratorHelper(new File(graphsonFile), {String line ->
+            Map vertexRawMap = line.jsonToObject()
+            long vertexId = vertexRawMap['_id']
+            String vertexType = vertexRawMap['vertexType']
+            
+            logger.trace('vertexId: ' + vertexId)
+       
+            
+            /*
+             * Vertex Creation - START
+             */
+            Vertex titanGraphVertex = graph.addVertex("class:"+vertexType)
+          
+            
+            Set<String> keys =  vertexRawMap.keySet()
+            
+            
+                for(key in keys){
+                    String faunusProperty = key
+                    Object faunusValue = vertexRawMap["${key}"]
+                    
+                    if (faunusProperty.equals('vertexType')) {
+                        titanGraphVertex.setProperty('vertexType', faunusValue)
+                    } else {
+                        boolean valid = faunusProperty.contains('temp_') || faunusProperty.startsWith("_")
+                        if (!valid) {
+                            titanGraphVertex.setProperty(faunusProperty, faunusValue)
+                        }
+                    }
+                }
+                
+                logger.trace("Vertex Created ($vertexId ) \t $vertexType\t")
+                logger.trace("===========================")
+                
+                //println "Vertex Created ($vertexId ) \t $vertexType\t" + (vertexRawMap as TreeMap)
+            
+            count ++
+            
+            if(count % 10000 == 0){ //Every so often commit to the graph
+               graph.commit()
+//                db.commit()
+                double timeA= (System.currentTimeMillis() - startTime) / 1000
+                double ratePerSec = count / timeA
+                double esTime = (1 / ratePerSec) / 60
+                logger.debug("Committed: " + formatNumber(count) + " - " + formatNumber(1) + "\t Time (mins): " + formatNumber( timeA / 60 ) + "\tE/S Time(mins): " + esTime)
+                println "Committed: " + formatNumber(count)
+            }
+            
+        }, {throw it ;
+            })
+      
+        
+        }finally{
+        graph.shutdown()
+    }
+        
+        return 
 		OrientGraphNoTx graph1 = new OrientGraphNoTx("memory:");
 		graph1.setUseClassForEdgeLabel(true);
 		graph1.setUseClassForVertexLabel(true)
@@ -96,22 +174,26 @@ class GraphMethods {
 
 		return
 		// EVERY TIME YOU NEED A GRAPH INSTANCE
-		OrientGraphFactory factory = new OrientGraphFactory("plocal:C:/temp/graph/db3").setupPool(1, 10);
-		OrientGraph graph = factory.getTx();
-
-
-		try{
-			Vertex luca = graph.addVertex("Account"); // 1st OPERATION: IMPLICITLY BEGIN A TRANSACTION
-			luca.setProperty( "name", "Luca" );
-			Vertex marko = graph.addVertex(null);
-			marko.setProperty( "name", "Marko" );
-			Edge lucaKnowsMarko = graph.addEdge(null, luca, marko, "knows");
-			graph.commit();
-
-			println graph.V().map().toList()
-		} catch( Exception e ) {
-			graph.rollback();
-		}
+		te()
 	}
+    
+    private static te() {
+        OrientGraphFactory factory = new OrientGraphFactory("plocal:C:/temp/graph/db3").setupPool(1, 10);
+        OrientGraph graph = factory.getTx();
+        
+        
+        try{
+            Vertex luca = graph.addVertex("Account"); // 1st OPERATION: IMPLICITLY BEGIN A TRANSACTION
+            luca.setProperty( "name", "Luca" );
+            Vertex marko = graph.addVertex(null);
+            marko.setProperty( "name", "Marko" );
+            Edge lucaKnowsMarko = graph.addEdge(null, luca, marko, "knows");
+            graph.commit();
+            
+            println graph.V().map().toList()
+        } catch( Exception e ) {
+            graph.rollback();
+        }
+    }
 
 }

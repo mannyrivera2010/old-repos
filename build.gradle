@@ -59,11 +59,13 @@ task jarDist(type: Jar, dependsOn: copyAllDependencies){
 }
 
 dependencies {
+
+    compile 'commons-io:commons-io:2.4'
     compile 'org.slf4j:slf4j-api:1.7.5'
-	compile 'com.orientechnologies:orientdb-core:2.0-M1'
-	compile 'com.orientechnologies:orient-commons:2.0-M1'
-	compile 'com.orientechnologies:orientdb-client:2.0-M1'
-	compile 'com.orientechnologies:orientdb-graphdb:2.0-M1'
+	compile 'com.orientechnologies:orientdb-core:2.0.10'
+	compile 'com.orientechnologies:orient-commons:2.0.10'
+	compile 'com.orientechnologies:orientdb-client:2.0.10'
+	compile 'com.orientechnologies:orientdb-graphdb:2.0.10'
 	compile 'com.tinkerpop.blueprints:blueprints-core:2.6.0'
     compile 'org.codehaus.groovy:groovy:2.3.3'
     compile 'org.codehaus.groovy:groovy-all:2.3.3'
