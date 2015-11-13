@@ -1,0 +1,37 @@
+### Java ###
+*.class
+
+### Python ###
+*.pyc
+
+### Gradle ###
+
+*/.gradle/
+*/.svn/
+build
+
+### Eclipse ###
+*.pydevproject
+.metadata
+*.tmp
+*.bak
+*.swp
+*~.nib
+*.project
+*.classpath
+*/.settings
+
+### IDEA ###
+*.iml
+*.ipr
+*.iws
+
+
+.idea/
+.gradle/
+.svn/
+.settings/
+
+/.nb-gradle/private/
+
+/bin/
